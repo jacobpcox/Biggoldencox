@@ -440,7 +440,8 @@
         .stat-pill:nth-child(1) .num { color: var(--xbox-green); }
         .stat-pill:nth-child(2) .num { color: var(--steam-blue); }
         .stat-pill:nth-child(3) .num { color: var(--nintendo-red); }
-        .stat-pill:nth-child(4) .num { color: var(--gold-accent); }
+        .stat-pill:nth-child(4) .num { color: var(--discord-blurple); }
+        .stat-pill:nth-child(5) .num { color: var(--gold-accent); }
 
         .stat-pill .lbl {
             margin-top: 8px;
@@ -507,6 +508,26 @@
             flex-direction: column;
             transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
             position: relative;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .card-cta {
+            margin-top: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent, var(--gold-accent));
+            opacity: 0.75;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .card:hover .card-cta {
+            opacity: 1;
+            transform: translateX(4px);
         }
 
         .card::before {
@@ -544,6 +565,12 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* Arcade cabinets are tall — show the whole cabinet rather than cropping */
+        .card[data-type="arcade"] .card-image img {
+            object-fit: contain;
+            padding: 10px;
         }
 
         .placeholder {
@@ -717,8 +744,6 @@
 
         <!-- Timer card -->
         <div class="timer-card">
-            <div class="achievement">OG Gamer</div>
-
             <div class="timer-title">Gaming Legacy Duration</div>
             <div class="start-date">Since December 25, 2009</div>
 
@@ -786,6 +811,7 @@
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="console">Consoles</button>
                 <button class="filter-btn" data-filter="handheld">Handhelds</button>
+                <button class="filter-btn" data-filter="arcade">Arcade</button>
             </div>
 
             <div class="grid" id="grid"></div>
@@ -797,6 +823,7 @@
         </div>
     </div>
 
+    <script src="data.js"></script>
     <script>
         // Start date: December 25, 2009
         const startDate = new Date('2009-12-25T00:00:00');
@@ -897,162 +924,8 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        // ===== Console Collection =====
-        // To add a photo: drop an image in images/consoles/ and set the `img` path.
-        // Missing images fall back to a styled placeholder automatically.
-        const consoles = [
-            {
-                name: "Neo Geo / Omega Entertainment Machine",
-                type: "console", year: 2025, price: 1200, qty: 1,
-                accent: "#FFD700", icon: "🕹️", img: "images/consoles/omega-entertainment-machine.jpg",
-                desc: "I love this system — it's a Neo Geo arcade board built to use as a home console, with all the power of the arcade cabinet. I have some good memories playing all the games without eating my quarters."
-            },
-            {
-                name: "Atari 2600",
-                type: "console", year: 2024, price: 0, qty: 1,
-                accent: "#E60012", icon: "🕹️", img: "images/consoles/atari-2600.jpg",
-                desc: "I bought this at an auction and got into a bidding war — ended up with a stellar deal. It came with all the games, the gaming booklets, and even the original purchase ad used to decide to buy the console. It even had a repair ticket from when it was a few years old and the amount paid. You can't beat the history that came with this console."
-            },
-            {
-                name: "Super Nintendo",
-                type: "console", year: 2025, price: 80, qty: 1,
-                accent: "#E60012", icon: "🎮", img: "images/consoles/super-nintendo.jpg",
-                desc: "A console I missed out on as a kid. I play Super Metroid with a friend on here, and bought the next one I saw that was in good condition — games are hard to find on the baby. Mega Man X has kicked my butt; I don't know if I'll finish it, lol."
-            },
-            {
-                name: "Atari Jaguar",
-                type: "console", year: 2025, price: 400, qty: 1,
-                accent: "#E60012", icon: "🎮", img: "images/consoles/atari-jaguar.jpg",
-                desc: "I bought this one because I love the controller. My friend bought the Doom port and doesn't even have the console — that's how I found out about it, near the beginning of my collection."
-            },
-            {
-                name: "Sega Saturn",
-                type: "console", year: 2026, price: 150, qty: 1,
-                accent: "#66c0f4", icon: "🎮", img: "images/consoles/sega-saturn.jpg",
-                desc: "The Sega Saturn is one of my newer consoles and I haven't actually gotten a chance to play it yet — but it's going to be a goody for sure."
-            },
-            {
-                name: "PlayStation 1",
-                type: "console", year: 2025, price: 80, qty: 1,
-                accent: "#003791", icon: "🎮", img: "images/consoles/playstation-1.jpg",
-                desc: "I played this as a kid but never had one, so I rebought it to play as an adult and give it the love it needs. Final Fantasy was one of the go-to games for a hang out back then."
-            },
-            {
-                name: "PlayStation 2",
-                type: "console", year: 2005, price: 0, qty: 1,
-                accent: "#003791", icon: "🎮", img: "images/consoles/playstation-2.jpg",
-                desc: "The PS2 was one of my favorites as a kid — so many good games. Some of my biggest memories are Guitar Hero 1 and 2 with my brother and his friends. I also spent a lot of time driving backwards to make cars lose races in NASCAR 06."
-            },
-            {
-                name: "Nintendo GameCube",
-                type: "console", year: 2002, price: 0, qty: 2,
-                accent: "#5865F2", icon: "🎮", img: "images/consoles/gamecube.jpg",
-                desc: "Another childhood console. I don't know if I can pick a favorite game, but WarioWare is probably one I spent some of the biggest amount of time on, trying to beat those mini games. I also spent so much time raising chao in Sonic Adventure 2 — both very important games."
-            },
-            {
-                name: "Xbox",
-                type: "console", year: 2003, price: 0, qty: 1,
-                accent: "#107C10", icon: "🎮", img: "images/consoles/xbox.jpg",
-                desc: "Halo 1 and 2 are the games of this console. My friends and I would spend hours with rocket launchers trying to build forts with movable objects — just for them to despawn the moment we got them in place."
-            },
-            {
-                name: "Nintendo Wii",
-                type: "console", year: 2008, price: 0, qty: 1,
-                accent: "#66c0f4", icon: "🎮", img: "images/consoles/wii.jpg",
-                desc: "Wii Sports was the go-to game when I was a kid. I spent so much time boxing that I'd break out in a sweat trying to beat my punching bag record."
-            },
-            {
-                name: "Nintendo Entertainment System",
-                type: "console", year: 1992, price: 0, qty: 2,
-                accent: "#E60012", icon: "🎮", img: "images/consoles/nes.jpg",
-                desc: "I played this a little as a kid, but later in life I found a love for Zelda 1 — and it has some other great titles. I also really like throwing papers at people's windows in Paperboy."
-            },
-            {
-                name: "Sega Genesis",
-                type: "console", year: 2025, price: 100, qty: 2,
-                accent: "#66c0f4", icon: "🎮", img: "images/consoles/genesis.jpg",
-                desc: "A newer console in my collection — I haven't played much, but my girlfriend got me my first game on it right before we started dating, so it has a special place in my heart. We bought that and the Neo Geo the same day, some of our first memories together."
-            },
-            {
-                name: "Xbox 360",
-                type: "console", year: 2006, price: 0, qty: 2,
-                accent: "#107C10", icon: "🎮", img: "images/consoles/xbox-360.jpg",
-                desc: "Oh man, the Xbox 360. 8th grade through high school I'd play so much — I'd skip doing my homework just to have more time, and stay up all night playing Xbox Live with my friends."
-            },
-            {
-                name: "Xbox One",
-                type: "console", year: 2013, price: 0, qty: 2,
-                accent: "#107C10", icon: "🎮", img: "images/consoles/xbox-one.jpg",
-                desc: "I got the Xbox One day one — preordered it with a friend and we drove 45 minutes to the nearest GameStop we could find with it, just to have it day one. We were so excited, only to find out the thing we really loved about the Xbox 360 was our friends, who weren't on Xbox One."
-            },
-            {
-                name: "Nintendo 64",
-                type: "console", year: 1997, price: 100, qty: 3,
-                accent: "#E60012", icon: "🎮", img: "images/consoles/n64.jpg",
-                desc: "The N64 was a childhood console I've had my entire life. Played so many games on this bad boy — GoldenEye 64 and Zelda: Ocarina of Time are my favorites, but there are so many."
-            },
-            {
-                name: "Sega Master System",
-                type: "console", year: 2026, price: 120, qty: null,
-                accent: "#66c0f4", icon: "🎮", img: "images/consoles/sega-master-system.jpg",
-                desc: "One of my newer systems that I haven't played yet. I was so excited when I found it at the coolest retro game shop — I got overwhelmed with the inventory in there and wanted to buy so much."
-            },
-            {
-                name: "Nintendo Switch",
-                type: "console", year: 2016, price: 0, qty: null,
-                accent: "#E60012", icon: "🎮", img: "images/consoles/nintendo-switch.jpg",
-                desc: "I love Mario Party and Mario Golf — they're among some of my favorite things to do with friends."
-            },
-            {
-                name: "Game Boy Color",
-                type: "handheld", year: 2000, price: 0, qty: 1,
-                accent: "#E60012", icon: "👾", img: "images/consoles/game-boy-color.jpg",
-                desc: "My childhood handheld. I'd sneak it into daycare and play in the playground tube with one of my childhood friends."
-            },
-            {
-                name: "Game Boy Advance",
-                type: "handheld", year: 2002, price: 0, qty: 1,
-                accent: "#5865F2", icon: "👾", img: "images/consoles/game-boy-advance.jpg",
-                desc: "I'd always steal this from my brother — I could play my Game Boy Color games, but using my brother's Advance to make him mad was the real fun."
-            },
-            {
-                name: "Nintendo DS",
-                type: "handheld", year: 2025, price: 50, qty: 1,
-                accent: "#E60012", icon: "👾", img: "images/consoles/nintendo-ds.jpg",
-                desc: "I haven't played the one I have, but I'd play Mario Kart DS so much at a friend's house when we were kids — he'd get mad. I was also so jealous of everyone and their PictoChat that I had to buy it as an adult."
-            },
-            {
-                name: "PSP",
-                type: "handheld", year: 2006, price: 0, qty: 1,
-                accent: "#003791", icon: "👾", img: "images/consoles/psp.jpg",
-                desc: "I had to get this handheld as soon as I saw a friend play GTA on a school field trip. I could never convince my parents to buy GTA for me, so my favorite game was LEGO Star Wars 3 — I'd play it in bed instead of sleeping."
-            }
-        ];
-
-        // Original hardware release year for each system (shown in the badge).
-        const RELEASE_YEAR = {
-            "Neo Geo / Omega Entertainment Machine": 1990,
-            "Atari 2600": 1977,
-            "Nintendo Entertainment System": 1985,
-            "Sega Master System": 1986,
-            "Super Nintendo": 1991,
-            "Sega Genesis": 1989,
-            "Nintendo 64": 1996,
-            "Atari Jaguar": 1993,
-            "Sega Saturn": 1994,
-            "PlayStation 1": 1994,
-            "PlayStation 2": 2000,
-            "Nintendo GameCube": 2001,
-            "Xbox": 2001,
-            "Nintendo Wii": 2006,
-            "Xbox 360": 2005,
-            "Xbox One": 2013,
-            "Nintendo Switch": 2017,
-            "Game Boy Color": 1998,
-            "Game Boy Advance": 2001,
-            "Nintendo DS": 2004,
-            "PSP": 2004
-        };
+        // Console + game data is defined in data.js (shared with console.html).
+        const consoles = CONSOLES;
 
         function formatPrice(price) {
             if (price === null || price === undefined) return null;
@@ -1061,11 +934,13 @@
         }
 
         function cardHTML(c) {
+            const slug = consoleSlug(c);
             const released = RELEASE_YEAR[c.name];
             const yearBadge = released ? `<div class="year-badge" title="Original release year">${released}</div>` : "";
             const qtyBadge = (c.qty && c.qty > 1) ? `<div class="qty-badge">×${c.qty}</div>` : "";
 
-            const tags = [`<span class="tag type">${c.type === "handheld" ? "Handheld" : "Console"}</span>`];
+            const typeLabel = { handheld: "Handheld", arcade: "Arcade", console: "Console" }[c.type] || "Console";
+            const tags = [`<span class="tag type">${typeLabel}</span>`];
             const priceLabel = formatPrice(c.price);
             if (priceLabel) tags.push(`<span class="tag price">${priceLabel}</span>`);
             if (c.year) tags.push(`<span class="tag">Acquired ${c.year}</span>`);
@@ -1087,7 +962,7 @@
                 : placeholder;
 
             return `
-                <article class="card" data-type="${c.type}" style="--accent:${c.accent};">
+                <a class="card" href="console.html?c=${slug}" data-type="${c.type}" style="--accent:${c.accent};">
                     <div class="card-image" data-placeholder="${placeholder.replace(/"/g, '&quot;')}">
                         ${qtyBadge}
                         ${yearBadge}
@@ -1097,13 +972,17 @@
                         <h3 class="card-name">${c.name}</h3>
                         <div class="meta-row">${tags.join("")}</div>
                         ${desc}
+                        <span class="card-cta">View games &rarr;</span>
                     </div>
-                </article>`;
+                </a>`;
         }
 
         function renderConsoles(filter) {
             const grid = document.getElementById("grid");
-            const list = consoles.filter(c => filter === "all" || c.type === filter);
+            const list = consoles
+                .filter(c => filter === "all" || c.type === filter)
+                .slice()
+                .sort((a, b) => (RELEASE_YEAR[a.name] || 9999) - (RELEASE_YEAR[b.name] || 9999));
             grid.innerHTML = list.map(cardHTML).join("");
             document.getElementById("noResults").style.display = list.length ? "none" : "block";
         }
@@ -1112,12 +991,14 @@
             const total = consoles.length;
             const consoleCount = consoles.filter(c => c.type === "console").length;
             const handheldCount = consoles.filter(c => c.type === "handheld").length;
+            const arcadeCount = consoles.filter(c => c.type === "arcade").length;
             const spent = consoles.reduce((sum, c) => sum + (c.price || 0), 0);
 
             document.getElementById("statsBar").innerHTML = `
                 <div class="stat-pill"><div class="num">${total}</div><div class="lbl">Systems Owned</div></div>
                 <div class="stat-pill"><div class="num">${consoleCount}</div><div class="lbl">Consoles</div></div>
                 <div class="stat-pill"><div class="num">${handheldCount}</div><div class="lbl">Handhelds</div></div>
+                <div class="stat-pill"><div class="num">${arcadeCount}</div><div class="lbl">Arcade</div></div>
                 <div class="stat-pill"><div class="num">$${spent.toLocaleString()}</div><div class="lbl">Total Invested</div></div>`;
         }
 

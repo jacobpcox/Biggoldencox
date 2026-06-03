@@ -3,3 +3,6 @@
 
 # Backups of original console images (pre background-removal)
 images/consoles/_orig/
+
+# Temp image-processing workspace
+.imgtmp/

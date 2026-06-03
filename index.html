@@ -363,6 +363,312 @@
             color: var(--nintendo-red);
         }
 
+        /* ===== Console Collection ===== */
+        .collection {
+            width: 100%;
+            max-width: 1300px;
+            margin: 80px auto 0;
+            padding: 0 10px;
+        }
+
+        .collection-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .collection-eyebrow {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+        }
+
+        .collection-title {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(2rem, 6vw, 3.2rem);
+            font-weight: 900;
+            background: linear-gradient(
+                90deg,
+                var(--xbox-green),
+                var(--steam-blue),
+                var(--discord-blurple),
+                var(--nintendo-red),
+                var(--gold-accent)
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.2));
+        }
+
+        .collection-subtitle {
+            margin-top: 12px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            margin: 35px auto 30px;
+            max-width: 900px;
+        }
+
+        .stat-pill {
+            flex: 1 1 160px;
+            text-align: center;
+            padding: 18px 20px;
+            background: linear-gradient(145deg, rgba(35, 39, 42, 0.9), rgba(27, 40, 56, 0.9));
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-pill .num {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.6rem, 4vw, 2.2rem);
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-pill:nth-child(1) .num { color: var(--xbox-green); }
+        .stat-pill:nth-child(2) .num { color: var(--steam-blue); }
+        .stat-pill:nth-child(3) .num { color: var(--nintendo-red); }
+        .stat-pill:nth-child(4) .num { color: var(--gold-accent); }
+
+        .stat-pill .lbl {
+            margin-top: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Filter buttons */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .filter-btn {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 10px 26px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .filter-btn.active {
+            color: #000;
+            background: linear-gradient(135deg, var(--gold-accent), #FFA500);
+            border-color: var(--gold-accent);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 26px;
+        }
+
+        /* Card */
+        .card {
+            background: linear-gradient(145deg, rgba(35, 39, 42, 0.92), rgba(27, 40, 56, 0.92));
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent, var(--gold-accent)), transparent);
+            z-index: 2;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent, var(--gold-accent));
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.55),
+                0 0 0 1px var(--accent, var(--gold-accent));
+        }
+
+        /* Image area */
+        .card-image {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            background:
+                radial-gradient(circle at 50% 42%, #6b7686 0%, #3a4250 45%, #20262e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .placeholder .icon {
+            font-size: 46px;
+            filter: grayscale(0.2);
+            opacity: 0.85;
+        }
+
+        .placeholder .ph-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 15px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 1px;
+        }
+
+        .placeholder .ph-note {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Badges over image */
+        .year-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, var(--gold-accent), #FFA500);
+            color: #000;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .qty-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+
+        /* Card body */
+        .card-body {
+            padding: 22px 22px 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-name {
+            font-family: 'Orbitron', monospace;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 14px;
+        }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(0, 0, 0, 0.25);
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .tag.type { color: var(--steam-blue); border-color: rgba(102, 192, 244, 0.4); }
+        .tag.price { color: var(--gold-accent); border-color: rgba(255, 215, 0, 0.35); }
+
+        .card-desc {
+            font-size: 15.5px;
+            line-height: 1.55;
+            color: rgba(255, 255, 255, 0.78);
+            flex: 1;
+        }
+
+        .card-desc.empty {
+            color: rgba(255, 255, 255, 0.4);
+            font-style: italic;
+        }
+
+        .no-results {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 60px 20px;
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
         /* Glow effects */
         .glow-xbox { text-shadow: 0 0 20px var(--xbox-green); }
         .glow-playstation { text-shadow: 0 0 20px var(--playstation-blue); }
@@ -402,14 +708,6 @@
     <div class="particles" id="particles"></div>
 
     <div class="container">
-        <!-- Platform icons -->
-        <div class="platform-bar">
-            <div class="platform-icon platform-xbox" title="Xbox">X</div>
-            <div class="platform-icon platform-playstation" title="PlayStation">PS</div>
-            <div class="platform-icon platform-steam" title="Steam">ST</div>
-            <div class="platform-icon platform-nintendo" title="Nintendo">N</div>
-            <div class="platform-icon platform-discord" title="Discord">DC</div>
-        </div>
 
         <!-- Gamertag -->
         <div class="gamertag-container">
@@ -474,8 +772,28 @@
             </div>
         </div>
 
+        <!-- ===== Console Collection ===== -->
+        <section class="collection" id="collection">
+            <div class="collection-header">
+                <div class="collection-eyebrow">The Collection</div>
+                <h2 class="collection-title">Console Vault</h2>
+                <p class="collection-subtitle">Every machine biggoldencox has owned &mdash; from childhood classics to retro rescues.</p>
+            </div>
+
+            <div class="stats-bar" id="statsBar"></div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="console">Consoles</button>
+                <button class="filter-btn" data-filter="handheld">Handhelds</button>
+            </div>
+
+            <div class="grid" id="grid"></div>
+            <div class="no-results" id="noResults" style="display:none;">No consoles match this filter.</div>
+        </section>
+
         <div class="footer">
-            Gaming across all platforms <span>&hearts;</span> since Christmas 2009
+            Gaming across all platforms <span>&hearts;</span> since 1996
         </div>
     </div>
 
@@ -578,6 +896,241 @@
         createParticles();
         updateTimer();
         setInterval(updateTimer, 1000);
+
+        // ===== Console Collection =====
+        // To add a photo: drop an image in images/consoles/ and set the `img` path.
+        // Missing images fall back to a styled placeholder automatically.
+        const consoles = [
+            {
+                name: "Neo Geo / Omega Entertainment Machine",
+                type: "console", year: 2025, price: 1200, qty: 1,
+                accent: "#FFD700", icon: "🕹️", img: "images/consoles/omega-entertainment-machine.jpg",
+                desc: "I love this system — it's a Neo Geo arcade board built to use as a home console, with all the power of the arcade cabinet. I have some good memories playing all the games without eating my quarters."
+            },
+            {
+                name: "Atari 2600",
+                type: "console", year: 2024, price: 0, qty: 1,
+                accent: "#E60012", icon: "🕹️", img: "images/consoles/atari-2600.jpg",
+                desc: "I bought this at an auction and got into a bidding war — ended up with a stellar deal. It came with all the games, the gaming booklets, and even the original purchase ad used to decide to buy the console. It even had a repair ticket from when it was a few years old and the amount paid. You can't beat the history that came with this console."
+            },
+            {
+                name: "Super Nintendo",
+                type: "console", year: 2025, price: 80, qty: 1,
+                accent: "#E60012", icon: "🎮", img: "images/consoles/super-nintendo.jpg",
+                desc: "A console I missed out on as a kid. I play Super Metroid with a friend on here, and bought the next one I saw that was in good condition — games are hard to find on the baby. Mega Man X has kicked my butt; I don't know if I'll finish it, lol."
+            },
+            {
+                name: "Atari Jaguar",
+                type: "console", year: 2025, price: 400, qty: 1,
+                accent: "#E60012", icon: "🎮", img: "images/consoles/atari-jaguar.jpg",
+                desc: "I bought this one because I love the controller. My friend bought the Doom port and doesn't even have the console — that's how I found out about it, near the beginning of my collection."
+            },
+            {
+                name: "Sega Saturn",
+                type: "console", year: 2026, price: 150, qty: 1,
+                accent: "#66c0f4", icon: "🎮", img: "images/consoles/sega-saturn.jpg",
+                desc: "The Sega Saturn is one of my newer consoles and I haven't actually gotten a chance to play it yet — but it's going to be a goody for sure."
+            },
+            {
+                name: "PlayStation 1",
+                type: "console", year: 2025, price: 80, qty: 1,
+                accent: "#003791", icon: "🎮", img: "images/consoles/playstation-1.jpg",
+                desc: "I played this as a kid but never had one, so I rebought it to play as an adult and give it the love it needs. Final Fantasy was one of the go-to games for a hang out back then."
+            },
+            {
+                name: "PlayStation 2",
+                type: "console", year: 2005, price: 0, qty: 1,
+                accent: "#003791", icon: "🎮", img: "images/consoles/playstation-2.jpg",
+                desc: "The PS2 was one of my favorites as a kid — so many good games. Some of my biggest memories are Guitar Hero 1 and 2 with my brother and his friends. I also spent a lot of time driving backwards to make cars lose races in NASCAR 06."
+            },
+            {
+                name: "Nintendo GameCube",
+                type: "console", year: 2002, price: 0, qty: 2,
+                accent: "#5865F2", icon: "🎮", img: "images/consoles/gamecube.jpg",
+                desc: "Another childhood console. I don't know if I can pick a favorite game, but WarioWare is probably one I spent some of the biggest amount of time on, trying to beat those mini games. I also spent so much time raising chao in Sonic Adventure 2 — both very important games."
+            },
+            {
+                name: "Xbox",
+                type: "console", year: 2003, price: 0, qty: 1,
+                accent: "#107C10", icon: "🎮", img: "images/consoles/xbox.jpg",
+                desc: "Halo 1 and 2 are the games of this console. My friends and I would spend hours with rocket launchers trying to build forts with movable objects — just for them to despawn the moment we got them in place."
+            },
+            {
+                name: "Nintendo Wii",
+                type: "console", year: 2008, price: 0, qty: 1,
+                accent: "#66c0f4", icon: "🎮", img: "images/consoles/wii.jpg",
+                desc: "Wii Sports was the go-to game when I was a kid. I spent so much time boxing that I'd break out in a sweat trying to beat my punching bag record."
+            },
+            {
+                name: "Nintendo Entertainment System",
+                type: "console", year: 1992, price: 0, qty: 2,
+                accent: "#E60012", icon: "🎮", img: "images/consoles/nes.jpg",
+                desc: "I played this a little as a kid, but later in life I found a love for Zelda 1 — and it has some other great titles. I also really like throwing papers at people's windows in Paperboy."
+            },
+            {
+                name: "Sega Genesis",
+                type: "console", year: 2025, price: 100, qty: 2,
+                accent: "#66c0f4", icon: "🎮", img: "images/consoles/genesis.jpg",
+                desc: "A newer console in my collection — I haven't played much, but my girlfriend got me my first game on it right before we started dating, so it has a special place in my heart. We bought that and the Neo Geo the same day, some of our first memories together."
+            },
+            {
+                name: "Xbox 360",
+                type: "console", year: 2006, price: 0, qty: 2,
+                accent: "#107C10", icon: "🎮", img: "images/consoles/xbox-360.jpg",
+                desc: "Oh man, the Xbox 360. 8th grade through high school I'd play so much — I'd skip doing my homework just to have more time, and stay up all night playing Xbox Live with my friends."
+            },
+            {
+                name: "Xbox One",
+                type: "console", year: 2013, price: 0, qty: 2,
+                accent: "#107C10", icon: "🎮", img: "images/consoles/xbox-one.jpg",
+                desc: "I got the Xbox One day one — preordered it with a friend and we drove 45 minutes to the nearest GameStop we could find with it, just to have it day one. We were so excited, only to find out the thing we really loved about the Xbox 360 was our friends, who weren't on Xbox One."
+            },
+            {
+                name: "Nintendo 64",
+                type: "console", year: 1997, price: 100, qty: 3,
+                accent: "#E60012", icon: "🎮", img: "images/consoles/n64.jpg",
+                desc: "The N64 was a childhood console I've had my entire life. Played so many games on this bad boy — GoldenEye 64 and Zelda: Ocarina of Time are my favorites, but there are so many."
+            },
+            {
+                name: "Sega Master System",
+                type: "console", year: 2026, price: 120, qty: null,
+                accent: "#66c0f4", icon: "🎮", img: "images/consoles/sega-master-system.jpg",
+                desc: "One of my newer systems that I haven't played yet. I was so excited when I found it at the coolest retro game shop — I got overwhelmed with the inventory in there and wanted to buy so much."
+            },
+            {
+                name: "Nintendo Switch",
+                type: "console", year: 2016, price: 0, qty: null,
+                accent: "#E60012", icon: "🎮", img: "images/consoles/nintendo-switch.jpg",
+                desc: "I love Mario Party and Mario Golf — they're among some of my favorite things to do with friends."
+            },
+            {
+                name: "Game Boy Color",
+                type: "handheld", year: 2000, price: 0, qty: 1,
+                accent: "#E60012", icon: "👾", img: "images/consoles/game-boy-color.jpg",
+                desc: "My childhood handheld. I'd sneak it into daycare and play in the playground tube with one of my childhood friends."
+            },
+            {
+                name: "Game Boy Advance",
+                type: "handheld", year: 2002, price: 0, qty: 1,
+                accent: "#5865F2", icon: "👾", img: "images/consoles/game-boy-advance.jpg",
+                desc: "I'd always steal this from my brother — I could play my Game Boy Color games, but using my brother's Advance to make him mad was the real fun."
+            },
+            {
+                name: "Nintendo DS",
+                type: "handheld", year: 2025, price: 50, qty: 1,
+                accent: "#E60012", icon: "👾", img: "images/consoles/nintendo-ds.jpg",
+                desc: "I haven't played the one I have, but I'd play Mario Kart DS so much at a friend's house when we were kids — he'd get mad. I was also so jealous of everyone and their PictoChat that I had to buy it as an adult."
+            },
+            {
+                name: "PSP",
+                type: "handheld", year: 2006, price: 0, qty: 1,
+                accent: "#003791", icon: "👾", img: "images/consoles/psp.jpg",
+                desc: "I had to get this handheld as soon as I saw a friend play GTA on a school field trip. I could never convince my parents to buy GTA for me, so my favorite game was LEGO Star Wars 3 — I'd play it in bed instead of sleeping."
+            }
+        ];
+
+        // Original hardware release year for each system (shown in the badge).
+        const RELEASE_YEAR = {
+            "Neo Geo / Omega Entertainment Machine": 1990,
+            "Atari 2600": 1977,
+            "Nintendo Entertainment System": 1985,
+            "Sega Master System": 1986,
+            "Super Nintendo": 1991,
+            "Sega Genesis": 1989,
+            "Nintendo 64": 1996,
+            "Atari Jaguar": 1993,
+            "Sega Saturn": 1994,
+            "PlayStation 1": 1994,
+            "PlayStation 2": 2000,
+            "Nintendo GameCube": 2001,
+            "Xbox": 2001,
+            "Nintendo Wii": 2006,
+            "Xbox 360": 2005,
+            "Xbox One": 2013,
+            "Nintendo Switch": 2017,
+            "Game Boy Color": 1998,
+            "Game Boy Advance": 2001,
+            "Nintendo DS": 2004,
+            "PSP": 2004
+        };
+
+        function formatPrice(price) {
+            if (price === null || price === undefined) return null;
+            if (price === 0) return "Gift / Free";
+            return "$" + price.toLocaleString();
+        }
+
+        function cardHTML(c) {
+            const released = RELEASE_YEAR[c.name];
+            const yearBadge = released ? `<div class="year-badge" title="Original release year">${released}</div>` : "";
+            const qtyBadge = (c.qty && c.qty > 1) ? `<div class="qty-badge">×${c.qty}</div>` : "";
+
+            const tags = [`<span class="tag type">${c.type === "handheld" ? "Handheld" : "Console"}</span>`];
+            const priceLabel = formatPrice(c.price);
+            if (priceLabel) tags.push(`<span class="tag price">${priceLabel}</span>`);
+            if (c.year) tags.push(`<span class="tag">Acquired ${c.year}</span>`);
+
+            const desc = c.desc && c.desc.trim()
+                ? `<p class="card-desc">${c.desc}</p>`
+                : `<p class="card-desc empty">Notes coming soon &mdash; this one's still finding its story.</p>`;
+
+            const placeholder = `
+                <div class="placeholder">
+                    <div class="icon">${c.icon}</div>
+                    <div class="ph-name">${c.name}</div>
+                    <div class="ph-note">Photo coming soon</div>
+                </div>`;
+
+            const img = c.img
+                ? `<img src="${c.img}" alt="${c.name}" loading="lazy"
+                        onerror="this.parentNode.innerHTML = this.parentNode.dataset.placeholder;">`
+                : placeholder;
+
+            return `
+                <article class="card" data-type="${c.type}" style="--accent:${c.accent};">
+                    <div class="card-image" data-placeholder="${placeholder.replace(/"/g, '&quot;')}">
+                        ${qtyBadge}
+                        ${yearBadge}
+                        ${img}
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-name">${c.name}</h3>
+                        <div class="meta-row">${tags.join("")}</div>
+                        ${desc}
+                    </div>
+                </article>`;
+        }
+
+        function renderConsoles(filter) {
+            const grid = document.getElementById("grid");
+            const list = consoles.filter(c => filter === "all" || c.type === filter);
+            grid.innerHTML = list.map(cardHTML).join("");
+            document.getElementById("noResults").style.display = list.length ? "none" : "block";
+        }
+
+        function renderStats() {
+            const total = consoles.length;
+            const consoleCount = consoles.filter(c => c.type === "console").length;
+            const handheldCount = consoles.filter(c => c.type === "handheld").length;
+            const spent = consoles.reduce((sum, c) => sum + (c.price || 0), 0);
+
+            document.getElementById("statsBar").innerHTML = `
+                <div class="stat-pill"><div class="num">${total}</div><div class="lbl">Systems Owned</div></div>
+                <div class="stat-pill"><div class="num">${consoleCount}</div><div class="lbl">Consoles</div></div>
+                <div class="stat-pill"><div class="num">${handheldCount}</div><div class="lbl">Handhelds</div></div>
+                <div class="stat-pill"><div class="num">$${spent.toLocaleString()}</div><div class="lbl">Total Invested</div></div>`;
+        }
+
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+                btn.classList.add("active");
+                renderConsoles(btn.dataset.filter);
+            });
+        });
+
+        renderStats();
+        renderConsoles("all");
     </script>
 </body>
 </html>

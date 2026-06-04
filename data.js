@@ -340,7 +340,7 @@ const GAMES = {
         { title: "Monopoly Streets", price: 0 },
         { title: "Halo: Combat Evolved Anniversary", rating: 5, price: 40 },
         { title: "Halo 3", rating: 5, price: 0 },
-        { title: "Halo Wars", rating: 5, price: 60 },
+        { title: "Halo Wars", rating: 5, price: 0 },
         { title: "Halo 3: ODST", rating: 5, price: 0 },
         { title: "Halo 4", rating: 5, price: 60 },
         { title: "Fallout 3", rating: 3, price: 0 },
@@ -417,8 +417,8 @@ const GAMES = {
     ],
     "sega-master-system": [],
     "nintendo-switch": [
-        { title: "Super Mario Odyssey", rating: 3, price: 60 },
-        { title: "Mario Kart 8 Deluxe", rating: 5, price: 60 },
+        { title: "Super Mario Odyssey", rating: 3, price: 0 },
+        { title: "Mario Kart 8 Deluxe", rating: 5, price: 0 },
         { title: "Stardew Valley", rating: 5, price: 20 }
     ],
     "game-boy-color": [

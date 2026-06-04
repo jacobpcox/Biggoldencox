@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-04T16:28:48.658Z",
+  "generated": "2026-06-04T16:52:08.302Z",
   "games": {
     "atari-2600": {
       "Asteroids": "images/games/atari-2600/asteroids.png",
@@ -25,7 +25,10 @@
       "Laser Blast": "images/games/atari-2600/laser-blast.png",
       "Brain Games": "images/games/atari-2600/brain-games.png",
       "Space Jockey": "images/games/atari-2600/space-jockey.png",
-      "Basketball": "images/games/atari-2600/basketball.png"
+      "Basketball": "images/games/atari-2600/basketball.png",
+      "Speedway II": "images/games/atari-2600/speedway-ii.png",
+      "Target Fun": "images/games/atari-2600/target-fun.png",
+      "Pong Sports": "images/games/atari-2600/pong-sports.png"
     },
     "atari-jaguar": {
       "Alien vs Predator": "images/games/atari-jaguar/alien-vs-predator.png",
@@ -40,12 +43,15 @@
       "Super Mario Bros.": "images/games/nes/super-mario-bros.png",
       "Duck Hunt": "images/games/nes/duck-hunt.png",
       "The Simpsons: Bart vs. the Space Mutants": "images/games/nes/the-simpsons-bart-vs-the-space-mutants.png",
-      "10-Yard Fight": "images/games/nes/10-yard-fight.png"
+      "10-Yard Fight": "images/games/nes/10-yard-fight.png",
+      "Track Meet": "images/games/nes/track-meet.png"
     },
     "super-nintendo": {
       "Mega Man X": "images/games/super-nintendo/mega-man-x.png",
       "The Legend of Zelda: A Link to the Past": "images/games/super-nintendo/the-legend-of-zelda-a-link-to-the-past.png",
-      "Super Mario World": "images/games/super-nintendo/super-mario-world.png"
+      "Super Mario World": "images/games/super-nintendo/super-mario-world.png",
+      "Super Game Boy": "images/games/super-nintendo/super-game-boy.png",
+      "Attack of the PETSCII Robots": "images/games/super-nintendo/attack-of-the-petscii-robots.png"
     },
     "n64": {
       "The Legend of Zelda: Ocarina of Time": "images/games/n64/the-legend-of-zelda-ocarina-of-time.png",
@@ -68,7 +74,9 @@
       "Super Smash Bros.": "images/games/n64/super-smash-bros.png",
       "Wave Race 64": "images/games/n64/wave-race-64.png",
       "Dark Rift": "images/games/n64/dark-rift.png",
-      "San Francisco Rush 2049": "images/games/n64/san-francisco-rush-2049.png"
+      "San Francisco Rush 2049": "images/games/n64/san-francisco-rush-2049.png",
+      "Bass Hunter 64": "images/games/n64/bass-hunter-64.png",
+      "Superman 64": "images/games/n64/superman-64.png"
     },
     "gamecube": {
       "WarioWare, Inc.: Mega Party Game$!": "images/games/gamecube/warioware-inc-mega-party-game.png",
@@ -86,20 +94,26 @@
       "Sonic Adventure 2: Battle": "images/games/gamecube/sonic-adventure-2-battle.png",
       "The Legend of Zelda: Twilight Princess": "images/games/gamecube/the-legend-of-zelda-twilight-princess.png",
       "Paper Mario: The Thousand-Year Door": "images/games/gamecube/paper-mario-the-thousand-year-door.png",
-      "Mario Party 4": "images/games/gamecube/mario-party-4.png"
+      "Mario Party 4": "images/games/gamecube/mario-party-4.png",
+      "Tak 2: The Staff of Dreams": "images/games/gamecube/tak-2-the-staff-of-dreams.png",
+      "Madagascar": "images/games/gamecube/madagascar.png",
+      "SpongeBob SquarePants: The Movie": "images/games/gamecube/spongebob-squarepants-the-movie.png",
+      "Over the Hedge": "images/games/gamecube/over-the-hedge.png"
     },
     "wii": {
       "Mario & Sonic at the Olympic Games": "images/games/wii/mario-sonic-at-the-olympic-games.png",
       "Guitar Hero III: Legends of Rock": "images/games/wii/guitar-hero-iii-legends-of-rock.png",
       "Wii Play": "images/games/wii/wii-play.png",
       "Cabela's Big Game Hunter 2010": "images/games/wii/cabela-s-big-game-hunter-2010.png",
-      "Wii Sports": "images/games/wii/wii-sports.png"
+      "Wii Sports": "images/games/wii/wii-sports.png",
+      "Pirates of the Caribbean: At World's End": "images/games/wii/pirates-of-the-caribbean-at-world-s-end.png"
     },
     "game-boy-color": {
       "Pokémon Blue": "images/games/game-boy-color/pokemon-blue.png",
       "Tony Hawk's Pro Skater": "images/games/game-boy-color/tony-hawk-s-pro-skater.png",
       "Rugrats in Paris": "images/games/game-boy-color/rugrats-in-paris.png",
-      "Who Wants to Be a Millionaire": "images/games/game-boy-color/who-wants-to-be-a-millionaire.png"
+      "Who Wants to Be a Millionaire": "images/games/game-boy-color/who-wants-to-be-a-millionaire.png",
+      "Tetris Blast": "images/games/game-boy-color/tetris-blast.png"
     },
     "nintendo-ds": {
       "The Legend of Zelda: Phantom Hourglass": "images/games/nintendo-ds/the-legend-of-zelda-phantom-hourglass.png",
@@ -113,7 +127,9 @@
     "sega-saturn": {
       "Blazing Heroes": "images/games/sega-saturn/blazing-heroes.png"
     },
-    "playstation-1": {},
+    "playstation-1": {
+      "Iron Man and X-O Manowar in Heavy Metal": "images/games/playstation-1/iron-man-and-x-o-manowar-in-heavy-metal.png"
+    },
     "playstation-2": {
       "Tekken Tag Tournament": "images/games/playstation-2/tekken-tag-tournament.png",
       "Orphen: Scion of Sorcery": "images/games/playstation-2/orphen-scion-of-sorcery.png",
@@ -124,10 +140,12 @@
       "NBA 08": "images/games/playstation-2/nba-08.png",
       "Need for Speed: Underground 2": "images/games/playstation-2/need-for-speed-underground-2.png",
       "Need for Speed: ProStreet": "images/games/playstation-2/need-for-speed-prostreet.png",
-      "FIFA Soccer 08": "images/games/playstation-2/fifa-soccer-08.png"
+      "FIFA Soccer 08": "images/games/playstation-2/fifa-soccer-08.png",
+      "2006 FIFA World Cup": "images/games/playstation-2/2006-fifa-world-cup.png"
     },
     "omega-entertainment-machine": {
-      "The King of Fighters 2000": "images/games/omega-entertainment-machine/the-king-of-fighters-2000.png"
+      "The King of Fighters 2000": "images/games/omega-entertainment-machine/the-king-of-fighters-2000.png",
+      "Super N-in-1 SNK Multicart": "images/games/omega-entertainment-machine/super-n-in-1-snk-multicart.png"
     },
     "steam-deck": {
       "7 Days to Die": "images/games/steam-deck/7-days-to-die.jpg",
@@ -189,7 +207,105 @@
       "Unrailed": "images/games/steam-deck/unrailed.jpg",
       "Viscera Cleanup Detail": "images/games/steam-deck/viscera-cleanup-detail.jpg",
       "Warframe": "images/games/steam-deck/warframe.jpg",
-      "Who's Your Daddy": "images/games/steam-deck/who-s-your-daddy.jpg"
+      "Who's Your Daddy": "images/games/steam-deck/who-s-your-daddy.jpg",
+      "Crawl": "images/games/steam-deck/crawl.png",
+      "The Jackbox Party Pack": "images/games/steam-deck/the-jackbox-party-pack.png",
+      "Robocraft": "images/games/steam-deck/robocraft.png",
+      "RollerCoaster Tycoon": "images/games/steam-deck/rollercoaster-tycoon.png"
+    },
+    "xbox": {
+      "Shrek SuperSlam": "images/games/xbox/shrek-superslam.png",
+      "Madden NFL 06": "images/games/xbox/madden-nfl-06.png",
+      "Halo": "images/games/xbox/halo.png",
+      "Halo 2": "images/games/xbox/halo-2.png"
+    },
+    "xbox-360": {
+      "Toy Story 3": "images/games/xbox-360/toy-story-3.png",
+      "Wipeout 2": "images/games/xbox-360/wipeout-2.png",
+      "WALL-E": "images/games/xbox-360/wall-e.png",
+      "The Elder Scrolls V: Skyrim": "images/games/xbox-360/the-elder-scrolls-v-skyrim.png",
+      "Rock Band 2": "images/games/xbox-360/rock-band-2.png",
+      "Red Dead Redemption": "images/games/xbox-360/red-dead-redemption.png",
+      "LEGO Indiana Jones": "images/games/xbox-360/lego-indiana-jones.png",
+      "Kung Fu Panda": "images/games/xbox-360/kung-fu-panda.png",
+      "Borderlands 2": "images/games/xbox-360/borderlands-2.png",
+      "Battlefield 3": "images/games/xbox-360/battlefield-3.png",
+      "Grand Theft Auto V": "images/games/xbox-360/grand-theft-auto-v.png",
+      "Grand Theft Auto IV": "images/games/xbox-360/grand-theft-auto-iv.png",
+      "Hole in the Wall": "images/games/xbox-360/hole-in-the-wall.png",
+      "Payday 2": "images/games/xbox-360/payday-2.png",
+      "Monopoly": "images/games/xbox-360/monopoly.png",
+      "NCAA Football 11": "images/games/xbox-360/ncaa-football-11.png",
+      "NBA 2K11": "images/games/xbox-360/nba-2k11.png",
+      "Monopoly Streets": "images/games/xbox-360/monopoly-streets.png",
+      "Halo: Combat Evolved Anniversary": "images/games/xbox-360/halo-combat-evolved-anniversary.png",
+      "Halo 3": "images/games/xbox-360/halo-3.png",
+      "Halo Wars": "images/games/xbox-360/halo-wars.png",
+      "Halo 3: ODST": "images/games/xbox-360/halo-3-odst.png",
+      "Halo 4": "images/games/xbox-360/halo-4.png",
+      "Fallout 3": "images/games/xbox-360/fallout-3.png",
+      "Far Cry 3": "images/games/xbox-360/far-cry-3.png",
+      "Forza Horizon": "images/games/xbox-360/forza-horizon.png",
+      "Call of Duty: Black Ops": "images/games/xbox-360/call-of-duty-black-ops.png",
+      "Call of Duty: Black Ops II": "images/games/xbox-360/call-of-duty-black-ops-ii.png",
+      "Call of Duty: Modern Warfare 2": "images/games/xbox-360/call-of-duty-modern-warfare-2.png",
+      "Call of Duty: Modern Warfare 3": "images/games/xbox-360/call-of-duty-modern-warfare-3.png",
+      "Command & Conquer 3: Tiberium Wars": "images/games/xbox-360/command-conquer-3-tiberium-wars.png",
+      "Dead Island": "images/games/xbox-360/dead-island.png",
+      "Dead Island: Riptide": "images/games/xbox-360/dead-island-riptide.png",
+      "Kinect Adventures!": "images/games/xbox-360/kinect-adventures.png",
+      "L.A. Noire": "images/games/xbox-360/l-a-noire.png",
+      "Left 4 Dead": "images/games/xbox-360/left-4-dead.png",
+      "Mafia II": "images/games/xbox-360/mafia-ii.png",
+      "Midnight Club: Los Angeles": "images/games/xbox-360/midnight-club-los-angeles.png"
+    },
+    "xbox-one": {
+      "Titanfall": "images/games/xbox-one/titanfall.png",
+      "Tom Clancy's Rainbow Six Siege": "images/games/xbox-one/tom-clancy-s-rainbow-six-siege.png",
+      "Tom Clancy's The Division": "images/games/xbox-one/tom-clancy-s-the-division.png",
+      "Sea of Thieves": "images/games/xbox-one/sea-of-thieves.png",
+      "The Elder Scrolls Online: Tamriel Unlimited": "images/games/xbox-one/the-elder-scrolls-online-tamriel-unlimited.png",
+      "State of Decay 2": "images/games/xbox-one/state-of-decay-2.png",
+      "Red Dead Redemption II": "images/games/xbox-one/red-dead-redemption-ii.png",
+      "Battlefield Hardline": "images/games/xbox-one/battlefield-hardline.png",
+      "Forza Horizon 2": "images/games/xbox-one/forza-horizon-2.png",
+      "Just Cause 3": "images/games/xbox-one/just-cause-3.png",
+      "Battlefield V": "images/games/xbox-one/battlefield-v.png",
+      "Battlefield 1": "images/games/xbox-one/battlefield-1.png",
+      "Battlefield 4": "images/games/xbox-one/battlefield-4.png",
+      "Halo: The Master Chief Collection": "images/games/xbox-one/halo-the-master-chief-collection.png",
+      "Star Wars Battlefront": "images/games/xbox-one/star-wars-battlefront.png",
+      "Call of Duty: Modern Warfare": "images/games/xbox-one/call-of-duty-modern-warfare.png",
+      "Cyberpunk 2077": "images/games/xbox-one/cyberpunk-2077.png",
+      "Destiny": "images/games/xbox-one/destiny.png",
+      "Destiny 2": "images/games/xbox-one/destiny-2.png",
+      "Dying Light": "images/games/xbox-one/dying-light.png",
+      "Fallout 4": "images/games/xbox-one/fallout-4.png",
+      "Fallout 76": "images/games/xbox-one/fallout-76.png",
+      "Far Cry 4": "images/games/xbox-one/far-cry-4.png",
+      "Forza Horizon 3": "images/games/xbox-one/forza-horizon-3.png",
+      "Forza Motorsport 5": "images/games/xbox-one/forza-motorsport-5.png",
+      "Grand Theft Auto V": "images/games/xbox-one/grand-theft-auto-v.png",
+      "Halo 5: Guardians": "images/games/xbox-one/halo-5-guardians.png",
+      "Halo Wars 2": "images/games/xbox-one/halo-wars-2.png"
+    },
+    "nintendo-switch": {
+      "Super Mario Odyssey": "images/games/nintendo-switch/super-mario-odyssey.png",
+      "Mario Kart 8 Deluxe": "images/games/nintendo-switch/mario-kart-8-deluxe.png",
+      "Stardew Valley": "images/games/nintendo-switch/stardew-valley.png"
+    },
+    "arcade-golden-tee": {
+      "Golden Tee": "images/games/arcade-golden-tee/golden-tee.png",
+      "Golden Tee 3K": "images/games/arcade-golden-tee/golden-tee-3k.png",
+      "Golden Tee 2K": "images/games/arcade-golden-tee/golden-tee-2k.png",
+      "Golden Tee '99": "images/games/arcade-golden-tee/golden-tee-99.png",
+      "Golden Tee '98": "images/games/arcade-golden-tee/golden-tee-98.png"
+    },
+    "arcade-big-buck-hunter": {
+      "Big Buck Hunter Pro": "images/games/arcade-big-buck-hunter/big-buck-hunter-pro.png",
+      "Big Buck Hunter Pro: Open Season": "images/games/arcade-big-buck-hunter/big-buck-hunter-pro-open-season.png",
+      "Big Buck Safari": "images/games/arcade-big-buck-hunter/big-buck-safari.png",
+      "Big Buck Safari: Outback": "images/games/arcade-big-buck-hunter/big-buck-safari-outback.png"
     }
   }
 }

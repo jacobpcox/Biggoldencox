@@ -443,6 +443,7 @@
         .stat-pill:nth-child(4) .num { color: var(--discord-blurple); }
         .stat-pill:nth-child(5) .num { color: #E67E22; }
         .stat-pill:nth-child(6) .num { color: var(--gold-accent); }
+        .stat-pill:nth-child(7) .num { color: #2ECC71; }
 
         .stat-pill .lbl {
             margin-top: 8px;
@@ -1007,13 +1008,25 @@
             const spent = consoleSpend + gameSpend;
             const fmt = n => "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 });
 
+            // Current market value (from values.json). Only shown once values exist.
+            const V = window.VALUES;
+            let valuePill = "";
+            const hasValues = V && ((V.consoles && Object.keys(V.consoles).length) || (V.games && Object.keys(V.games).length));
+            if (hasValues) {
+                let current = 0;
+                consoles.forEach(c => { current += (V.consoles && V.consoles[consoleSlug(c)]) || 0; });
+                if (V.games) Object.values(V.games).forEach(m => Object.values(m).forEach(v => current += v || 0));
+                valuePill = `<div class="stat-pill"><div class="num">${fmt(current)}</div><div class="lbl">Current Value</div></div>`;
+            }
+
             document.getElementById("statsBar").innerHTML = `
                 <div class="stat-pill"><div class="num">${total}</div><div class="lbl">Systems Owned</div></div>
                 <div class="stat-pill"><div class="num">${consoleCount}</div><div class="lbl">Consoles</div></div>
                 <div class="stat-pill"><div class="num">${handheldCount}</div><div class="lbl">Handhelds</div></div>
                 <div class="stat-pill"><div class="num">${arcadeCount}</div><div class="lbl">Arcade</div></div>
                 <div class="stat-pill"><div class="num">${gamesOwned}</div><div class="lbl">Games Owned</div></div>
-                <div class="stat-pill"><div class="num">${fmt(spent)}</div><div class="lbl">Total Invested</div></div>`;
+                <div class="stat-pill"><div class="num">${fmt(spent)}</div><div class="lbl">Total Invested</div></div>
+                ${valuePill}`;
         }
 
         document.querySelectorAll(".filter-btn").forEach(btn => {
@@ -1024,8 +1037,12 @@
             });
         });
 
-        renderStats();
-        renderConsoles("all");
+        // Load current-value data (if present) before rendering stats; harmless if absent.
+        fetch("values.json", { cache: "no-store" })
+            .then(r => r.ok ? r.json() : null)
+            .then(v => { window.VALUES = v; })
+            .catch(() => {})
+            .finally(() => { renderStats(); renderConsoles("all"); });
     </script>
 </body>
 </html>

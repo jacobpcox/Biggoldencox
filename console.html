@@ -132,6 +132,7 @@
         .stat-pill:nth-child(2) .num { color: var(--gold-accent); }
         .stat-pill:nth-child(3) .num { color: var(--nintendo-red); }
         .stat-pill:nth-child(4) .num { color: var(--xbox-green); }
+        .stat-pill:nth-child(5) .num { color: #2ECC71; }
 
         .grid {
             display: grid;
@@ -298,12 +299,23 @@
                 const rated = games.filter(g => typeof g.rating === "number");
                 const avgRating = rated.length ? (rated.reduce((s, g) => s + g.rating, 0) / rated.length) : null;
                 const hardware = (typeof c.price === "number" ? c.price : 0);
+
+                // Current market value for this system (from values.json, if populated).
+                const V = window.VALUES;
+                let valuePill = "";
+                if (V) {
+                    const cv = (V.consoles && V.consoles[slug]) || 0;
+                    const gv = (V.games && V.games[slug]) ? Object.values(V.games[slug]).reduce((s, x) => s + (x || 0), 0) : 0;
+                    if (cv || gv) valuePill = `<div class="stat-pill"><div class="num">${money(cv + gv)}</div><div class="lbl">Current Value</div></div>`;
+                }
+
                 statsBlock = `
                     <div class="stats-bar">
                         <div class="stat-pill"><div class="num">${games.length}</div><div class="lbl">Games</div></div>
                         <div class="stat-pill"><div class="num">${avgRating != null ? avgRating.toFixed(1) + "★" : "—"}</div><div class="lbl">Avg Rating</div></div>
                         <div class="stat-pill"><div class="num">${money(gameSpend)}</div><div class="lbl">Spent on Games</div></div>
                         <div class="stat-pill"><div class="num">${money(hardware + gameSpend)}</div><div class="lbl">System Total</div></div>
+                        ${valuePill}
                     </div>`;
             }
 
@@ -342,7 +354,12 @@
             window.scrollTo(0, 0);
         }
 
-        render();
+        // Load current-value data (if present) before rendering; harmless if absent.
+        fetch("values.json", { cache: "no-store" })
+            .then(r => r.ok ? r.json() : null)
+            .then(v => { window.VALUES = v; })
+            .catch(() => {})
+            .finally(render);
     </script>
 </body>
 </html>

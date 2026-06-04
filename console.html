@@ -335,7 +335,7 @@
                 const V = window.VALUES;
                 let valuePill = "";
                 if (V) {
-                    const cv = (V.consoles && V.consoles[slug]) || 0;
+                    const cv = ((V.consoles && V.consoles[slug]) || 0) * (c.qty || 1);
                     const gv = (V.games && V.games[slug]) ? Object.values(V.games[slug]).reduce((s, x) => s + (x || 0), 0) : 0;
                     if (cv || gv) valuePill = `<div class="stat-pill"><div class="num">${money(cv + gv)}</div><div class="lbl">Current Value</div></div>`;
                 }

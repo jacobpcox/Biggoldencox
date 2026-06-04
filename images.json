@@ -28,7 +28,10 @@
       "Basketball": "images/games/atari-2600/basketball.png",
       "Speedway II": "images/games/atari-2600/speedway-ii.png",
       "Target Fun": "images/games/atari-2600/target-fun.png",
-      "Pong Sports": "images/games/atari-2600/pong-sports.png"
+      "Pong Sports": "images/games/atari-2600/pong-sports.png",
+      "Memory Match": "images/games/atari-2600/memory-match.png",
+      "Space Combat": "images/games/atari-2600/space-combat.png",
+      "Tank Plus": "images/games/atari-2600/tank-plus.png"
     },
     "atari-jaguar": {
       "Alien vs Predator": "images/games/atari-jaguar/alien-vs-predator.png",
@@ -144,8 +147,7 @@
       "2006 FIFA World Cup": "images/games/playstation-2/2006-fifa-world-cup.png"
     },
     "omega-entertainment-machine": {
-      "The King of Fighters 2000": "images/games/omega-entertainment-machine/the-king-of-fighters-2000.png",
-      "Super N-in-1 SNK Multicart": "images/games/omega-entertainment-machine/super-n-in-1-snk-multicart.png"
+      "The King of Fighters 2000": "images/games/omega-entertainment-machine/the-king-of-fighters-2000.png"
     },
     "steam-deck": {
       "7 Days to Die": "images/games/steam-deck/7-days-to-die.jpg",
@@ -211,7 +213,8 @@
       "Crawl": "images/games/steam-deck/crawl.png",
       "The Jackbox Party Pack": "images/games/steam-deck/the-jackbox-party-pack.png",
       "Robocraft": "images/games/steam-deck/robocraft.png",
-      "RollerCoaster Tycoon": "images/games/steam-deck/rollercoaster-tycoon.png"
+      "RollerCoaster Tycoon": "images/games/steam-deck/rollercoaster-tycoon.png",
+      "Ace of Spades": "images/games/steam-deck/ace-of-spades.png"
     },
     "xbox": {
       "Shrek SuperSlam": "images/games/xbox/shrek-superslam.png",
@@ -232,10 +235,8 @@
       "Battlefield 3": "images/games/xbox-360/battlefield-3.png",
       "Grand Theft Auto V": "images/games/xbox-360/grand-theft-auto-v.png",
       "Grand Theft Auto IV": "images/games/xbox-360/grand-theft-auto-iv.png",
-      "Hole in the Wall": "images/games/xbox-360/hole-in-the-wall.png",
       "Payday 2": "images/games/xbox-360/payday-2.png",
       "Monopoly": "images/games/xbox-360/monopoly.png",
-      "NCAA Football 11": "images/games/xbox-360/ncaa-football-11.png",
       "NBA 2K11": "images/games/xbox-360/nba-2k11.png",
       "Monopoly Streets": "images/games/xbox-360/monopoly-streets.png",
       "Halo: Combat Evolved Anniversary": "images/games/xbox-360/halo-combat-evolved-anniversary.png",
@@ -256,8 +257,7 @@
       "Kinect Adventures!": "images/games/xbox-360/kinect-adventures.png",
       "L.A. Noire": "images/games/xbox-360/l-a-noire.png",
       "Left 4 Dead": "images/games/xbox-360/left-4-dead.png",
-      "Mafia II": "images/games/xbox-360/mafia-ii.png",
-      "Midnight Club: Los Angeles": "images/games/xbox-360/midnight-club-los-angeles.png"
+      "Mafia II": "images/games/xbox-360/mafia-ii.png"
     },
     "xbox-one": {
       "Titanfall": "images/games/xbox-one/titanfall.png",

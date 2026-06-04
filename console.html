@@ -106,6 +106,8 @@
         }
         .tag.release { color: var(--gold-accent); border-color: rgba(255, 215, 0, 0.35); }
         .tag.price { color: var(--gold-accent); border-color: rgba(255, 215, 0, 0.35); }
+        .tag.value { color: #2ECC71; border-color: rgba(46, 204, 113, 0.4); }
+        .meta-right { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
         .hero-desc { font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.82); }
 
         @media (max-width: 760px) {
@@ -233,7 +235,14 @@
             return "";
         }
 
-        function gameCardHTML(g, accent, fallbackIcon) {
+        function valueTag(slug, title) {
+            const V = window.VALUES;
+            const v = (V && V.games && V.games[slug]) ? V.games[slug][title] : undefined;
+            if (typeof v !== "number") return "";
+            return `<span class="tag value">Value $${v.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>`;
+        }
+
+        function gameCardHTML(g, accent, fallbackIcon, slug) {
             const placeholder = `
                 <div class="placeholder">
                     <div class="icon">${fallbackIcon || "🎮"}</div>
@@ -253,7 +262,7 @@
                         <h3 class="card-name">${esc(g.title)}</h3>
                         <div class="game-meta">
                             ${starsHTML(g.rating)}
-                            ${priceTag(g.price)}
+                            <span class="meta-right">${priceTag(g.price)}${valueTag(slug, g.title)}</span>
                         </div>
                     </div>
                 </div>`;
@@ -321,7 +330,7 @@
 
             let gamesBlock;
             if (games.length) {
-                gamesBlock = `<div class="grid">${games.map(g => gameCardHTML(g, c.accent, c.icon)).join("")}</div>`;
+                gamesBlock = `<div class="grid">${games.map(g => gameCardHTML(g, c.accent, c.icon, slug)).join("")}</div>`;
             } else {
                 gamesBlock = `
                     <div class="empty-state">

@@ -675,6 +675,7 @@
         .tag.type { color: var(--steam-blue); border-color: rgba(102, 192, 244, 0.4); }
         .tag.price { color: var(--gold-accent); border-color: rgba(255, 215, 0, 0.35); }
         .tag.games { color: #E67E22; border-color: rgba(230, 126, 34, 0.4); }
+        .tag.value { color: #2ECC71; border-color: rgba(46, 204, 113, 0.4); }
 
         .card-desc {
             font-size: 15.5px;
@@ -952,6 +953,14 @@
             if (cGames.length) {
                 const gSpend = cGames.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
                 tags.push(`<span class="tag games">${cGames.length} games · $${gSpend.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>`);
+            }
+
+            // Current market value tag (console hardware + its games), when values exist.
+            const V = window.VALUES;
+            if (V) {
+                let cv = (V.consoles && V.consoles[slug]) || 0;
+                if (V.games && V.games[slug]) cv += Object.values(V.games[slug]).reduce((s, x) => s + (x || 0), 0);
+                if (cv > 0) tags.push(`<span class="tag value">Value $${cv.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>`);
             }
 
             const desc = c.desc && c.desc.trim()

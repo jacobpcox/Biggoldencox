@@ -459,8 +459,43 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 40px;
+            margin-bottom: 18px;
         }
+
+        /* Search (centered, below the tabs) */
+        .search-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto 40px;
+            max-width: 460px;
+        }
+        .search-input {
+            width: 100%;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #fff;
+            padding: 12px 22px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .search-input::placeholder { color: rgba(255, 255, 255, 0.4); }
+        .search-input:focus {
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.12);
+        }
+
+        /* Search match note on cards */
+        .match-note {
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--steam-blue);
+            line-height: 1.4;
+        }
+        .match-note b { color: #fff; font-weight: 700; }
 
         .filter-btn {
             font-family: 'Rajdhani', sans-serif;
@@ -818,8 +853,13 @@
                 <button class="filter-btn" data-filter="arcade">Arcade</button>
             </div>
 
+            <div class="search-wrap">
+                <input id="search" class="search-input" type="search" autocomplete="off"
+                       placeholder="Search a game or console…">
+            </div>
+
             <div class="grid" id="grid"></div>
-            <div class="no-results" id="noResults" style="display:none;">No consoles match this filter.</div>
+            <div class="no-results" id="noResults" style="display:none;">No systems match your search.</div>
         </section>
 
         <div class="footer">
@@ -937,7 +977,7 @@
             return "$" + price.toLocaleString();
         }
 
-        function cardHTML(c) {
+        function cardHTML(c, q) {
             const slug = consoleSlug(c);
             const released = RELEASE_YEAR[c.name];
             const yearBadge = released ? `<div class="year-badge" title="Original release year">${released}</div>` : "";
@@ -979,6 +1019,17 @@
                         onerror="this.parentNode.innerHTML = this.parentNode.dataset.placeholder;">`
                 : placeholder;
 
+            // When searching, show which games on this system matched.
+            let matchNote = "";
+            if (q) {
+                const matched = (cGames || []).filter(g => g.title.toLowerCase().includes(q)).map(g => g.title);
+                if (matched.length) {
+                    const shown = matched.slice(0, 4).map(t => "<b>" + t.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</b>");
+                    const extra = matched.length > 4 ? ` +${matched.length - 4} more` : "";
+                    matchNote = `<div class="match-note">🎮 ${shown.join(", ")}${extra}</div>`;
+                }
+            }
+
             return `
                 <a class="card" href="console.html#${slug}" data-type="${c.type}" style="--accent:${c.accent};">
                     <div class="card-image" data-placeholder="${placeholder.replace(/"/g, '&quot;')}">
@@ -990,18 +1041,31 @@
                         <h3 class="card-name">${c.name}</h3>
                         <div class="meta-row">${tags.join("")}</div>
                         ${desc}
+                        ${matchNote}
                         <span class="card-cta">View games &rarr;</span>
                     </div>
                 </a>`;
         }
 
-        function renderConsoles(filter) {
+        let activeFilter = "all";
+        let searchQuery = "";
+
+        function consoleMatches(c, q) {
+            if (!q) return true;
+            if (c.name.toLowerCase().includes(q)) return true;
+            const games = (typeof GAMES !== "undefined") ? (GAMES[consoleSlug(c)] || []) : [];
+            return games.some(g => g.title.toLowerCase().includes(q));
+        }
+
+        function renderConsoles() {
             const grid = document.getElementById("grid");
+            const q = searchQuery.trim().toLowerCase();
             const list = consoles
-                .filter(c => filter === "all" || c.type === filter)
+                .filter(c => activeFilter === "all" || c.type === activeFilter)
+                .filter(c => consoleMatches(c, q))
                 .slice()
                 .sort((a, b) => (RELEASE_YEAR[a.name] || 9999) - (RELEASE_YEAR[b.name] || 9999));
-            grid.innerHTML = list.map(cardHTML).join("");
+            grid.innerHTML = list.map(c => cardHTML(c, q)).join("");
             document.getElementById("noResults").style.display = list.length ? "none" : "block";
         }
 
@@ -1042,8 +1106,14 @@
             btn.addEventListener("click", () => {
                 document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
                 btn.classList.add("active");
-                renderConsoles(btn.dataset.filter);
+                activeFilter = btn.dataset.filter;
+                renderConsoles();
             });
+        });
+
+        document.getElementById("search").addEventListener("input", (e) => {
+            searchQuery = e.target.value;
+            renderConsoles();
         });
 
         // Load current-value data (if present) before rendering stats; harmless if absent.
@@ -1051,7 +1121,7 @@
             .then(r => r.ok ? r.json() : null)
             .then(v => { window.VALUES = v; })
             .catch(() => {})
-            .finally(() => { renderStats(); renderConsoles("all"); });
+            .finally(() => { renderStats(); renderConsoles(); });
     </script>
 </body>
 </html>

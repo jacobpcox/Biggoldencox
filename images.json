@@ -31,7 +31,8 @@
       "Pong Sports": "images/games/atari-2600/pong-sports.png",
       "Memory Match": "images/games/atari-2600/memory-match.png",
       "Space Combat": "images/games/atari-2600/space-combat.png",
-      "Tank Plus": "images/games/atari-2600/tank-plus.png"
+      "Tank Plus": "images/games/atari-2600/tank-plus.png",
+      "Spelling": "images/games/atari-2600/spelling.png"
     },
     "atari-jaguar": {
       "Alien vs Predator": "images/games/atari-jaguar/alien-vs-predator.png",
@@ -257,7 +258,11 @@
       "Kinect Adventures!": "images/games/xbox-360/kinect-adventures.png",
       "L.A. Noire": "images/games/xbox-360/l-a-noire.png",
       "Left 4 Dead": "images/games/xbox-360/left-4-dead.png",
-      "Mafia II": "images/games/xbox-360/mafia-ii.png"
+      "Mafia II": "images/games/xbox-360/mafia-ii.png",
+      "Hole in the Wall": "images/games/xbox-360/hole-in-the-wall.png",
+      "Kinect Sports": "images/games/xbox-360/kinect-sports.png",
+      "Midnight Club: Los Angeles": "images/games/xbox-360/midnight-club-los-angeles.png",
+      "NCAA Football 11": "images/games/xbox-360/ncaa-football-11.png"
     },
     "xbox-one": {
       "Titanfall": "images/games/xbox-one/titanfall.png",

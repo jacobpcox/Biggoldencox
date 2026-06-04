@@ -516,3 +516,8 @@ const GAMES = {
         { title: "Big Buck Safari: Outback", rating: 3, price: 0 }
     ]
 };
+
+// Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, consoleSlug, findConsole };
+}

@@ -117,7 +117,21 @@
             font-family: 'Orbitron', monospace;
             font-size: 1.5rem; font-weight: 700; margin-bottom: 6px;
         }
-        .section-sub { color: rgba(255, 255, 255, 0.55); margin-bottom: 26px; font-size: 15px; }
+        .section-sub { color: rgba(255, 255, 255, 0.55); margin-bottom: 22px; font-size: 15px; }
+
+        .stats-bar { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 30px; }
+        .stat-pill {
+            flex: 1 1 150px; text-align: center; padding: 16px 18px;
+            background: linear-gradient(145deg, rgba(35, 39, 42, 0.9), rgba(27, 40, 56, 0.9));
+            border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+        .stat-pill .num { font-family: 'Orbitron', monospace; font-size: clamp(1.4rem, 3.5vw, 2rem); font-weight: 700; line-height: 1; }
+        .stat-pill .lbl { margin-top: 8px; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.5); }
+        .stat-pill:nth-child(1) .num { color: var(--steam-blue); }
+        .stat-pill:nth-child(2) .num { color: var(--gold-accent); }
+        .stat-pill:nth-child(3) .num { color: var(--nintendo-red); }
+        .stat-pill:nth-child(4) .num { color: var(--xbox-green); }
 
         .grid {
             display: grid;
@@ -198,6 +212,7 @@
             return new URLSearchParams(window.location.search).get(name);
         }
         function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+        function money(n) { return "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 }); }
 
         function starsHTML(rating) {
             if (typeof rating !== "number" || isNaN(rating)) {
@@ -275,6 +290,23 @@
                 : heroPlaceholder;
 
             const games = (GAMES[slug] || []);
+
+            // --- Game stats for this console ---
+            let statsBlock = "";
+            if (games.length) {
+                const gameSpend = games.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
+                const rated = games.filter(g => typeof g.rating === "number");
+                const avgRating = rated.length ? (rated.reduce((s, g) => s + g.rating, 0) / rated.length) : null;
+                const hardware = (typeof c.price === "number" ? c.price : 0);
+                statsBlock = `
+                    <div class="stats-bar">
+                        <div class="stat-pill"><div class="num">${games.length}</div><div class="lbl">Games</div></div>
+                        <div class="stat-pill"><div class="num">${avgRating != null ? avgRating.toFixed(1) + "★" : "—"}</div><div class="lbl">Avg Rating</div></div>
+                        <div class="stat-pill"><div class="num">${money(gameSpend)}</div><div class="lbl">Spent on Games</div></div>
+                        <div class="stat-pill"><div class="num">${money(hardware + gameSpend)}</div><div class="lbl">System Total</div></div>
+                    </div>`;
+            }
+
             let gamesBlock;
             if (games.length) {
                 gamesBlock = `<div class="grid">${games.map(g => gameCardHTML(g, c.accent, c.icon)).join("")}</div>`;
@@ -302,6 +334,7 @@
 
                 <h2 class="section-title">Games</h2>
                 <p class="section-sub">The games biggoldencox has played on the ${esc(c.name)}.</p>
+                ${statsBlock}
                 ${gamesBlock}
 
                 <div class="footer">Gaming across all platforms <span>&hearts;</span> since 1996</div>`;

@@ -441,7 +441,8 @@
         .stat-pill:nth-child(2) .num { color: var(--steam-blue); }
         .stat-pill:nth-child(3) .num { color: var(--nintendo-red); }
         .stat-pill:nth-child(4) .num { color: var(--discord-blurple); }
-        .stat-pill:nth-child(5) .num { color: var(--gold-accent); }
+        .stat-pill:nth-child(5) .num { color: #E67E22; }
+        .stat-pill:nth-child(6) .num { color: var(--gold-accent); }
 
         .stat-pill .lbl {
             margin-top: 8px;
@@ -672,6 +673,7 @@
 
         .tag.type { color: var(--steam-blue); border-color: rgba(102, 192, 244, 0.4); }
         .tag.price { color: var(--gold-accent); border-color: rgba(255, 215, 0, 0.35); }
+        .tag.games { color: #E67E22; border-color: rgba(230, 126, 34, 0.4); }
 
         .card-desc {
             font-size: 15.5px;
@@ -945,6 +947,12 @@
             if (priceLabel) tags.push(`<span class="tag price">${priceLabel}</span>`);
             if (c.year) tags.push(`<span class="tag">Acquired ${c.year}</span>`);
 
+            const cGames = (typeof GAMES !== "undefined") ? (GAMES[slug] || []) : [];
+            if (cGames.length) {
+                const gSpend = cGames.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
+                tags.push(`<span class="tag games">${cGames.length} games · $${gSpend.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>`);
+            }
+
             const desc = c.desc && c.desc.trim()
                 ? `<p class="card-desc">${c.desc}</p>`
                 : `<p class="card-desc empty">Notes coming soon &mdash; this one's still finding its story.</p>`;
@@ -992,14 +1000,20 @@
             const consoleCount = consoles.filter(c => c.type === "console").length;
             const handheldCount = consoles.filter(c => c.type === "handheld").length;
             const arcadeCount = consoles.filter(c => c.type === "arcade").length;
-            const spent = consoles.reduce((sum, c) => sum + (c.price || 0), 0);
+            const allGames = (typeof GAMES !== "undefined") ? Object.values(GAMES).flat() : [];
+            const gamesOwned = allGames.length;
+            const gameSpend = allGames.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
+            const consoleSpend = consoles.reduce((sum, c) => sum + (c.price || 0), 0);
+            const spent = consoleSpend + gameSpend;
+            const fmt = n => "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 });
 
             document.getElementById("statsBar").innerHTML = `
                 <div class="stat-pill"><div class="num">${total}</div><div class="lbl">Systems Owned</div></div>
                 <div class="stat-pill"><div class="num">${consoleCount}</div><div class="lbl">Consoles</div></div>
                 <div class="stat-pill"><div class="num">${handheldCount}</div><div class="lbl">Handhelds</div></div>
                 <div class="stat-pill"><div class="num">${arcadeCount}</div><div class="lbl">Arcade</div></div>
-                <div class="stat-pill"><div class="num">$${spent.toLocaleString()}</div><div class="lbl">Total Invested</div></div>`;
+                <div class="stat-pill"><div class="num">${gamesOwned}</div><div class="lbl">Games Owned</div></div>
+                <div class="stat-pill"><div class="num">${fmt(spent)}</div><div class="lbl">Total Invested</div></div>`;
         }
 
         document.querySelectorAll(".filter-btn").forEach(btn => {

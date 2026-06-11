@@ -517,7 +517,47 @@ const GAMES = {
     ]
 };
 
+// ===== Wishlist — systems not yet in the collection ("Hunting For") =====
+const WISHLIST = [
+    { name: "Intellivision", brand: "Mattel", year: 1979 },
+    { name: "ColecoVision", brand: "Coleco", year: 1982 },
+    { name: "Game Boy", brand: "Nintendo", year: 1989 },
+    { name: "TurboGrafx-16", brand: "NEC", year: 1989 },
+    { name: "Sega Game Gear", brand: "Sega", year: 1990 },
+    { name: "Philips CD-i", brand: "Philips", year: 1991 },
+    { name: "3DO", brand: "Panasonic", year: 1993 },
+    { name: "Neo Geo Pocket", brand: "SNK", year: 1998 },
+    { name: "Sega Dreamcast", brand: "Sega", year: 1999 },
+    { name: "PlayStation 3", brand: "Sony", year: 2006 },
+    { name: "PlayStation Vita", brand: "Sony", year: 2011 },
+    { name: "Nintendo 3DS", brand: "Nintendo", year: 2011 },
+    { name: "Wii U", brand: "Nintendo", year: 2012 },
+    { name: "PlayStation 4", brand: "Sony", year: 2013 },
+    { name: "PlayStation 5", brand: "Sony", year: 2020 },
+    { name: "Xbox Series X", brand: "Microsoft", year: 2020 }
+];
+
+// Brand for each owned console (by slug) — used by the insights dashboard.
+const BRAND = {
+    "nes": "Nintendo", "super-nintendo": "Nintendo", "n64": "Nintendo",
+    "gamecube": "Nintendo", "wii": "Nintendo", "nintendo-switch": "Nintendo",
+    "game-boy-color": "Nintendo", "game-boy-advance": "Nintendo", "nintendo-ds": "Nintendo",
+    "genesis": "Sega", "sega-saturn": "Sega", "sega-master-system": "Sega",
+    "playstation-1": "Sony", "playstation-2": "Sony", "psp": "Sony",
+    "xbox": "Microsoft", "xbox-360": "Microsoft", "xbox-one": "Microsoft",
+    "atari-2600": "Atari", "atari-jaguar": "Atari",
+    "omega-entertainment-machine": "SNK / Neo Geo",
+    "steam-deck": "Valve",
+    "arcade-golden-tee": "Arcade1Up", "arcade-big-buck-hunter": "Arcade1Up"
+};
+
+const BRAND_COLOR = {
+    "Nintendo": "#E60012", "Sega": "#66c0f4", "Sony": "#003791",
+    "Microsoft": "#107C10", "Atari": "#E67E22", "SNK / Neo Geo": "#FFD700",
+    "Valve": "#1b2838", "Arcade1Up": "#9b59b6"
+};
+
 // Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, consoleSlug, findConsole };
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, consoleSlug, findConsole };
 }

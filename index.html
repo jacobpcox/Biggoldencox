@@ -753,6 +753,89 @@
             font-size: 18px;
         }
 
+        /* ===== Collection insights ===== */
+        .insights, .wishlist {
+            width: 100%;
+            max-width: 1300px;
+            margin: 70px auto 0;
+            padding: 0 10px;
+        }
+        .section-head {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .section-head h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--steam-blue), var(--gold-accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .section-head p { color: rgba(255,255,255,0.55); margin-top: 8px; }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+        }
+        .insight-card {
+            background: linear-gradient(145deg, rgba(35,39,42,0.92), rgba(27,40,56,0.92));
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 18px;
+            padding: 22px 24px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .insight-card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            color: rgba(255,255,255,0.55); margin-bottom: 18px;
+        }
+        /* brand bars */
+        .brand-row { margin-bottom: 14px; }
+        .brand-row .lbl { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 5px; }
+        .brand-row .lbl .name { color: #fff; font-weight: 600; }
+        .brand-row .lbl .val { color: rgba(255,255,255,0.7); font-family: 'Orbitron', monospace; font-size: 13px; }
+        .brand-bar { height: 8px; border-radius: 6px; background: rgba(255,255,255,0.08); overflow: hidden; }
+        .brand-bar > span { display: block; height: 100%; border-radius: 6px; }
+        /* ranked lists */
+        .rank-list { list-style: none; }
+        .rank-list li {
+            display: flex; align-items: baseline; gap: 10px;
+            padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+            font-size: 15px;
+        }
+        .rank-list li:last-child { border-bottom: 0; }
+        .rank-list .num { font-family: 'Orbitron', monospace; color: var(--gold-accent); font-size: 13px; min-width: 22px; }
+        .rank-list .t { flex: 1; color: #fff; }
+        .rank-list .t small { display: block; color: rgba(255,255,255,0.45); font-size: 12px; }
+        .rank-list .v { font-family: 'Orbitron', monospace; color: #2ECC71; font-size: 14px; white-space: nowrap; }
+        /* facts */
+        .facts { display: flex; flex-direction: column; gap: 14px; }
+        .fact { display: flex; justify-content: space-between; align-items: baseline; }
+        .fact .k { color: rgba(255,255,255,0.6); font-size: 14px; }
+        .fact .v { font-family: 'Orbitron', monospace; color: var(--steam-blue); font-size: 15px; text-align: right; }
+        .gain-pos { color: #2ECC71 !important; }
+        .gain-neg { color: var(--nintendo-red) !important; }
+
+        /* ===== Wishlist ===== */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 16px;
+        }
+        .wish-card {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px 18px;
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed rgba(255,255,255,0.18);
+            border-left: 4px solid var(--wb, #888);
+            border-radius: 14px;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        .wish-card:hover { background: rgba(255,255,255,0.06); }
+        .wish-card .w-name { font-weight: 700; color: rgba(255,255,255,0.9); line-height: 1.2; }
+        .wish-card .w-meta { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 3px; }
+
         @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; }
         }
@@ -883,6 +966,12 @@
             <div class="grid" id="grid"></div>
             <div class="no-results" id="noResults" style="display:none;">No systems match your search.</div>
         </section>
+
+        <!-- Collection insights dashboard -->
+        <section class="insights" id="insights"></section>
+
+        <!-- Wishlist / Hunting For -->
+        <section class="wishlist" id="wishlist"></section>
 
         <div class="footer">
             Gaming across all platforms <span>&hearts;</span> since 1996
@@ -1124,6 +1213,101 @@
                 ${valuePill}`;
         }
 
+        const money = n => "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 });
+
+        function paidOf(c) {
+            let p = (c.price || 0);
+            (GAMES[consoleSlug(c)] || []).forEach(g => { if (typeof g.price === "number") p += g.price; });
+            return p;
+        }
+        function currentValueOf(c) {
+            const V = window.VALUES; if (!V) return 0;
+            const s = consoleSlug(c);
+            let v = ((V.consoles && V.consoles[s]) || 0) * (c.qty || 1);
+            if (V.games && V.games[s]) v += Object.values(V.games[s]).reduce((a, b) => a + (b || 0), 0);
+            return v;
+        }
+
+        function renderInsights() {
+            const el = document.getElementById("insights");
+            const V = window.VALUES;
+            if (!V) { el.innerHTML = ""; return; }
+
+            // Value by brand
+            const brandTotals = {};
+            consoles.forEach(c => { const b = BRAND[consoleSlug(c)] || "Other"; brandTotals[b] = (brandTotals[b] || 0) + currentValueOf(c); });
+            const brands = Object.entries(brandTotals).sort((a, b) => b[1] - a[1]);
+            const maxBrand = brands.length ? brands[0][1] : 1;
+            const brandHTML = brands.map(([b, v]) => `
+                <div class="brand-row">
+                    <div class="lbl"><span class="name">${b}</span><span class="val">${money(v)}</span></div>
+                    <div class="brand-bar"><span style="width:${(v / maxBrand * 100).toFixed(1)}%;background:${BRAND_COLOR[b] || '#888'}"></span></div>
+                </div>`).join("");
+
+            // Most valuable games
+            const allGames = [];
+            Object.entries(V.games || {}).forEach(([s, m]) => {
+                const c = consoles.find(x => consoleSlug(x) === s);
+                Object.entries(m).forEach(([t, v]) => allGames.push({ t, v, sys: c ? c.name : s }));
+            });
+            allGames.sort((a, b) => b.v - a.v);
+            const topGames = allGames.slice(0, 8).map((g, i) =>
+                `<li><span class="num">${i + 1}</span><span class="t">${g.t}<small>${g.sys}</small></span><span class="v">${money(g.v)}</span></li>`).join("");
+
+            // Biggest gainers (where something was paid)
+            const gainers = consoles.map(c => {
+                const paid = paidOf(c), val = currentValueOf(c);
+                return { name: c.name, paid, val, pct: paid > 0 ? (val - paid) / paid * 100 : null };
+            }).filter(x => x.pct !== null).sort((a, b) => b.pct - a.pct).slice(0, 5);
+            const gainHTML = gainers.map((g, i) =>
+                `<li><span class="num">${i + 1}</span><span class="t">${g.name}<small>${money(g.paid)} → ${money(g.val)}</small></span><span class="v ${g.pct >= 0 ? 'gain-pos' : 'gain-neg'}">${g.pct >= 0 ? '▲' : '▼'} ${Math.abs(g.pct).toFixed(0)}%</span></li>`).join("");
+
+            // At a glance
+            const withYear = consoles.filter(c => RELEASE_YEAR[c.name]);
+            const oldest = withYear.reduce((a, c) => RELEASE_YEAR[c.name] < RELEASE_YEAR[a.name] ? c : a);
+            const newest = withYear.reduce((a, c) => RELEASE_YEAR[c.name] > RELEASE_YEAR[a.name] ? c : a);
+            const units = consoles.reduce((a, c) => a + (c.qty || 1), 0);
+            const totalPaid = consoles.reduce((a, c) => a + paidOf(c), 0);
+            const totalVal = consoles.reduce((a, c) => a + currentValueOf(c), 0);
+            const pct = totalPaid > 0 ? (totalVal - totalPaid) / totalPaid * 100 : 0;
+            const ratedAll = Object.values(GAMES).flat().filter(g => typeof g.rating === "number");
+            const avgRating = ratedAll.length ? (ratedAll.reduce((a, g) => a + g.rating, 0) / ratedAll.length).toFixed(1) : "—";
+
+            el.innerHTML = `
+                <div class="section-head"><h2>Collection Insights</h2><p>Current market value broken down — prices are loose/used estimates.</p></div>
+                <div class="insight-grid">
+                    <div class="insight-card"><h3>Value by Brand</h3>${brandHTML}</div>
+                    <div class="insight-card"><h3>Most Valuable Games</h3><ol class="rank-list">${topGames}</ol></div>
+                    <div class="insight-card"><h3>Biggest Value Gainers</h3><ol class="rank-list">${gainHTML}</ol></div>
+                    <div class="insight-card"><h3>At a Glance</h3>
+                        <div class="facts">
+                            <div class="fact"><span class="k">Oldest system</span><span class="v">${oldest.name.split(" / ")[0]} · ${RELEASE_YEAR[oldest.name]}</span></div>
+                            <div class="fact"><span class="k">Newest system</span><span class="v">${newest.name} · ${RELEASE_YEAR[newest.name]}</span></div>
+                            <div class="fact"><span class="k">Years spanned</span><span class="v">${RELEASE_YEAR[newest.name] - RELEASE_YEAR[oldest.name]} yrs</span></div>
+                            <div class="fact"><span class="k">Total units owned</span><span class="v">${units}</span></div>
+                            <div class="fact"><span class="k">Avg game rating</span><span class="v">${avgRating}★</span></div>
+                            <div class="fact"><span class="k">Value vs. paid</span><span class="v ${pct >= 0 ? 'gain-pos' : 'gain-neg'}">${pct >= 0 ? '▲' : '▼'} ${Math.abs(pct).toFixed(0)}%</span></div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function renderWishlist() {
+            const el = document.getElementById("wishlist");
+            const items = WISHLIST.slice().sort((a, b) => (a.year || 0) - (b.year || 0));
+            el.innerHTML = `
+                <div class="section-head"><h2>Still Hunting</h2><p>${WISHLIST.length} systems on the wishlist — not in the collection yet.</p></div>
+                <div class="wishlist-grid">
+                    ${items.map(w => `
+                        <div class="wish-card" style="--wb:${BRAND_COLOR[w.brand] || '#888'}">
+                            <div>
+                                <div class="w-name">${w.name}</div>
+                                <div class="w-meta">${w.brand}${w.year ? ` · ${w.year}` : ""}</div>
+                            </div>
+                        </div>`).join("")}
+                </div>`;
+        }
+
         document.querySelectorAll(".filter-btn").forEach(btn => {
             btn.addEventListener("click", () => {
                 document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
@@ -1143,7 +1327,7 @@
             .then(r => r.ok ? r.json() : null)
             .then(v => { window.VALUES = v; })
             .catch(() => {})
-            .finally(() => { renderStats(); renderConsoles(); });
+            .finally(() => { renderStats(); renderConsoles(); renderInsights(); renderWishlist(); });
     </script>
 </body>
 </html>

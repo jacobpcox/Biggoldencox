@@ -557,7 +557,17 @@ const BRAND_COLOR = {
     "Valve": "#1b2838", "Arcade1Up": "#9b59b6"
 };
 
+// ===== Owned accessories per console =====
+// ACCESSORIES["<slug>"] = [ { name: "Extra Controller", price: 20, qty: 1, img: "images/..." }, ... ]
+// price = what you paid (counts toward Total Invested). Optional: qty, img.
+// Current value uses values.json -> accessories[slug][name] if present, otherwise the price paid.
+const ACCESSORIES = {};
+
+// ===== Per-console games wishlist (titles you're hunting for) =====
+// GAME_WISHLIST["<slug>"] = [ "Game Title", "Another Game", ... ]
+const GAME_WISHLIST = {};
+
 // Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, consoleSlug, findConsole };
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, consoleSlug, findConsole };
 }

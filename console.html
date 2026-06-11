@@ -214,6 +214,39 @@
         .empty-state .msg { font-size: 18px; color: rgba(255, 255, 255, 0.65); }
         .empty-state .sub { font-size: 14px; color: rgba(255, 255, 255, 0.4); margin-top: 8px; }
 
+        /* Section spacing for accessories / wishlist */
+        .subsection { margin-top: 56px; }
+
+        /* Accessories */
+        .acc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
+        .acc-card {
+            display: flex; align-items: center; gap: 14px;
+            background: linear-gradient(145deg, rgba(35,39,42,0.92), rgba(27,40,56,0.92));
+            border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 12px 14px;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+        }
+        .acc-img {
+            width: 64px; height: 64px; flex: none; border-radius: 10px; overflow: hidden;
+            background: radial-gradient(circle at 50% 42%, #6b7686 0%, #3a4250 45%, #20262e 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .acc-img img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+        .acc-img .placeholder .icon { font-size: 26px; opacity: 0.8; }
+        .acc-body { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+        .acc-name { font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 700; line-height: 1.2; }
+        .acc-qty { color: rgba(255,255,255,0.5); font-size: 12px; margin-left: 6px; }
+        .acc-body .tag.price { align-self: flex-start; }
+
+        /* Games wishlist */
+        .gwish-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+        .gwish-card {
+            padding: 14px 18px; font-weight: 600; color: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed rgba(255,255,255,0.18);
+            border-left: 4px solid var(--accent, #888);
+            border-radius: 12px;
+        }
+
         .not-found { text-align: center; padding: 100px 20px; }
         .not-found h1 { font-family: 'Orbitron', monospace; margin-bottom: 14px; }
         .not-found a { color: var(--gold-accent); }
@@ -322,30 +355,36 @@
                 : heroPlaceholder;
 
             const games = (GAMES[slug] || []);
+            const accessories = (ACCESSORIES[slug] || []);
+            const wishlist = (GAME_WISHLIST[slug] || []);
+            const V = window.VALUES;
 
-            // --- Game stats for this console ---
+            const gameSpend = games.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
+            const accSpend = accessories.reduce((s, a) => s + (typeof a.price === "number" ? a.price : 0), 0);
+            const rated = games.filter(g => typeof g.rating === "number");
+            const avgRating = rated.length ? (rated.reduce((s, g) => s + g.rating, 0) / rated.length) : null;
+            const hardware = (typeof c.price === "number" ? c.price : 0);
+
+            // Current market value: hardware×qty + games + accessories (explicit value, else price paid)
+            let valuePill = "";
+            if (V) {
+                const cv = ((V.consoles && V.consoles[slug]) || 0) * (c.qty || 1);
+                const gv = (V.games && V.games[slug]) ? Object.values(V.games[slug]).reduce((s, x) => s + (x || 0), 0) : 0;
+                const av = accessories.reduce((s, a) => {
+                    const ex = V.accessories && V.accessories[slug] && V.accessories[slug][a.name];
+                    return s + (typeof ex === "number" ? ex : (typeof a.price === "number" ? a.price : 0));
+                }, 0);
+                if (cv || gv || av) valuePill = `<div class="stat-pill"><div class="num">${money(cv + gv + av)}</div><div class="lbl">Current Value</div></div>`;
+            }
+
             let statsBlock = "";
-            if (games.length) {
-                const gameSpend = games.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
-                const rated = games.filter(g => typeof g.rating === "number");
-                const avgRating = rated.length ? (rated.reduce((s, g) => s + g.rating, 0) / rated.length) : null;
-                const hardware = (typeof c.price === "number" ? c.price : 0);
-
-                // Current market value for this system (from values.json, if populated).
-                const V = window.VALUES;
-                let valuePill = "";
-                if (V) {
-                    const cv = ((V.consoles && V.consoles[slug]) || 0) * (c.qty || 1);
-                    const gv = (V.games && V.games[slug]) ? Object.values(V.games[slug]).reduce((s, x) => s + (x || 0), 0) : 0;
-                    if (cv || gv) valuePill = `<div class="stat-pill"><div class="num">${money(cv + gv)}</div><div class="lbl">Current Value</div></div>`;
-                }
-
+            if (games.length || accessories.length) {
                 statsBlock = `
                     <div class="stats-bar">
                         <div class="stat-pill"><div class="num">${games.length}</div><div class="lbl">Games</div></div>
                         <div class="stat-pill"><div class="num">${avgRating != null ? avgRating.toFixed(1) + "★" : "—"}</div><div class="lbl">Avg Rating</div></div>
                         <div class="stat-pill"><div class="num">${money(gameSpend)}</div><div class="lbl">Spent on Games</div></div>
-                        <div class="stat-pill"><div class="num">${money(hardware + gameSpend)}</div><div class="lbl">System Total</div></div>
+                        <div class="stat-pill"><div class="num">${money(hardware + gameSpend + accSpend)}</div><div class="lbl">System Total</div></div>
                         ${valuePill}
                     </div>`;
             }
@@ -359,6 +398,40 @@
                         <div class="big">${c.icon}</div>
                         <div class="msg">Games coming soon</div>
                         <div class="sub">The library for this system is still being added.</div>
+                    </div>`;
+            }
+
+            // Accessories section
+            let accBlock = "";
+            if (accessories.length) {
+                const rows = accessories.map(a => {
+                    const ph = `<div class="placeholder"><div class="icon">🎛️</div></div>`;
+                    const img = a.img
+                        ? `<img src="${a.img}" alt="${esc(a.name)}" loading="lazy" onerror="this.parentNode.innerHTML = this.parentNode.dataset.placeholder;">`
+                        : ph;
+                    const pr = (a.price === 0) ? "Gift / Free" : (typeof a.price === "number" ? "$" + a.price.toLocaleString() : "");
+                    const qty = (a.qty && a.qty > 1) ? `<span class="acc-qty">×${a.qty}</span>` : "";
+                    return `<div class="acc-card">
+                        <div class="acc-img" data-placeholder="${ph.replace(/"/g, '&quot;')}">${img}</div>
+                        <div class="acc-body"><div class="acc-name">${esc(a.name)}${qty}</div>${pr ? `<span class="tag price">${pr}</span>` : ""}</div>
+                    </div>`;
+                }).join("");
+                accBlock = `
+                    <div class="subsection">
+                        <h2 class="section-title">Accessories</h2>
+                        <p class="section-sub">${accessories.length} accessor${accessories.length === 1 ? "y" : "ies"} · ${money(accSpend)} spent.</p>
+                        <div class="acc-grid">${rows}</div>
+                    </div>`;
+            }
+
+            // Games wishlist section
+            let wishBlock = "";
+            if (wishlist.length) {
+                wishBlock = `
+                    <div class="subsection">
+                        <h2 class="section-title">Games Wishlist</h2>
+                        <p class="section-sub">${wishlist.length} game${wishlist.length === 1 ? "" : "s"} biggoldencox is hunting for on the ${esc(c.name)}.</p>
+                        <div class="gwish-grid">${wishlist.map(t => `<div class="gwish-card" style="--accent:${c.accent};">${esc(t)}</div>`).join("")}</div>
                     </div>`;
             }
 
@@ -379,6 +452,8 @@
                 <p class="section-sub">The games biggoldencox has played on the ${esc(c.name)}.</p>
                 ${statsBlock}
                 ${gamesBlock}
+                ${accBlock}
+                ${wishBlock}
 
                 <div class="footer">Gaming across all platforms <span>&hearts;</span> since 1996</div>`;
 

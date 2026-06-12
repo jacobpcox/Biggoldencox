@@ -190,7 +190,8 @@ function findConsole(slug) {
 // ===== Games per console =====
 // Fill in each array to populate that console's page. Each game card shows:
 // image, title, a star rating, and the price paid. Game object shape:
-//   { title: "Game Name", img: "images/games/<slug>/<file>.jpg", rating: 4.5, price: 30 }
+//   { title: "Game Name", img: "images/games/<slug>/<file>.jpg", rating: 4.5, price: 30, players: "1-4" }
+// - `players` is optional (e.g. "1", "1-2", "1-4", "1-4 + online"); shown under the title.
 // - `img` is optional (falls back to a "Photo coming soon" placeholder).
 // - `rating` is 0–5 (decimals allowed, e.g. 4.5); omit it to show "Unrated".
 // - `price` is a number; use 0 for "Gift / Free"; omit it to hide the price tag.
@@ -517,6 +518,123 @@ const GAMES = {
     ]
 };
 
+// ===== Local player counts per game (couch/local only, online ignored) =====
+// PLAYERS["<slug>"]["<title>"] = "1" | "1-2" | "1-4" | ...  (shown under the game title)
+const PLAYERS = {
+    "atari-2600": {
+        "Asteroids": "1-2", "Bridge": "1", "Miniature Golf": "1-2", "Basic Programming": "1",
+        "Codebreaker": "1-2", "Megamania": "1-2", "Space Combat": "1-2", "Tank Plus": "1-2",
+        "Speedway II": "1-2", "Space Invaders": "1-2", "Super Breakout": "1-2", "Backgammon": "1-2",
+        "Pac-Man": "1-2", "Spelling": "1-2", "Missile Command": "1-2", "Chopper Command": "1-2",
+        "Donkey Kong": "1-2", "Warlords": "1-4", "E.T. the Extra-Terrestrial": "1", "Video Chess": "1-2",
+        "Sky Diver": "1-2", "Star Raiders": "1", "Adventure": "1", "Stellar Track": "1",
+        "Laser Blast": "1-2", "Brain Games": "1-2", "Memory Match": "1-2", "Space Jockey": "1-2",
+        "Target Fun": "1-2", "Basketball": "1-2", "Pong Sports": "1-4"
+    },
+    "nes": {
+        "Zelda II: The Adventure of Link": "1", "Game Genie": "1", "Tetris": "1", "Super Mario Bros. 3": "1-2",
+        "The Legend of Zelda": "1", "Super Mario Bros.": "1-2", "Duck Hunt": "1-2",
+        "The Simpsons: Bart vs. the Space Mutants": "1", "Track Meet": "1-6", "10-Yard Fight": "1-2"
+    },
+    "super-nintendo": {
+        "Mega Man X": "1", "Super Game Boy": "1", "The Legend of Zelda: A Link to the Past": "1",
+        "Super Mario World": "1-2", "Attack of the PETSCII Robots": "1"
+    },
+    "genesis": { "Contra: Hard Corps": "1-2", "Mortal Kombat": "1-2" },
+    "n64": {
+        "The Legend of Zelda: Ocarina of Time": "1", "Super Mario 64": "1", "Paperboy": "1",
+        "WWF WrestleMania 2000": "1-4", "Mortal Kombat Mythologies: Sub-Zero": "1", "Tarzan": "1",
+        "Madden NFL 99": "1-4", "Mia Hamm Soccer 64": "1-4", "A Bug's Life": "1", "Bass Hunter 64": "1-2",
+        "NFL Blitz 2000": "1-4", "Pokémon Stadium 2": "1-4", "Mario Party": "1-4",
+        "Monster Truck Madness 64": "1-2", "Pokémon Stadium": "1-4", "GoldenEye 007": "1-4",
+        "Star Wars Episode I: Racer": "1-2", "Superman 64": "1", "Mario Kart 64": "1-4",
+        "Super Smash Bros.": "1-4", "Wave Race 64": "1-2", "Dark Rift": "1-2", "San Francisco Rush 2049": "1-4"
+    },
+    "atari-jaguar": { "Alien vs Predator": "1", "Iron Soldier": "1" },
+    "sega-saturn": { "Blazing Heroes": "1" },
+    "playstation-1": { "Iron Man and X-O Manowar in Heavy Metal": "1-2" },
+    "playstation-2": {
+        "Tekken Tag Tournament": "1-2", "Orphen: Scion of Sorcery": "1", "Sly 2: Band of Thieves": "1",
+        "Grand Theft Auto: Vice City": "1", "NASCAR 2005: Chase for the Cup": "1-2",
+        "The Simpsons: Road Rage": "1-2", "2006 FIFA World Cup": "1-2", "NBA 08": "1-2",
+        "Need for Speed: Underground 2": "1", "Need for Speed: ProStreet": "1-2", "FIFA Soccer 08": "1-2"
+    },
+    "gamecube": {
+        "WarioWare, Inc.: Mega Party Game$!": "1-4", "Mario Kart: Double Dash!!": "1-4",
+        "Mario Superstar Baseball": "1-4", "Sonic Mega Collection": "1-2", "Tak 2: The Staff of Dreams": "1",
+        "The Ant Bully": "1", "Harry Potter and the Chamber of Secrets": "1", "Spider-Man 2": "1",
+        "Madagascar": "1", "Donkey Kong Jungle Beat": "1", "007: NightFire": "1-4",
+        "SpongeBob SquarePants: The Movie": "1", "Tony Hawk's Underground 2": "1-2", "Over the Hedge": "1",
+        "Shrek 2": "1-4", "Super Smash Bros. Melee": "1-4", "Sonic Adventure 2: Battle": "1-2",
+        "The Legend of Zelda: Twilight Princess": "1", "Paper Mario: The Thousand-Year Door": "1",
+        "Mario Party 4": "1-4"
+    },
+    "xbox": { "Shrek SuperSlam": "1-4", "Madden NFL 06": "1-2", "Halo": "1-4", "Halo 2": "1-4" },
+    "wii": {
+        "Mario & Sonic at the Olympic Games": "1-4", "Guitar Hero III: Legends of Rock": "1-2",
+        "Wii Play": "1-2", "Pirates of the Caribbean: At World's End": "1-2",
+        "Cabela's Big Game Hunter 2010": "1-2", "Wii Sports": "1-4"
+    },
+    "xbox-360": {
+        "Toy Story 3": "1-2", "Wipeout 2": "1-4", "WALL-E": "1-2", "The Elder Scrolls V: Skyrim": "1",
+        "Rock Band 2": "1-4", "Red Dead Redemption": "1", "LEGO Indiana Jones": "1-2", "Kung Fu Panda": "1-2",
+        "Borderlands 2": "1-2", "Battlefield 3": "1", "Grand Theft Auto V": "1", "Grand Theft Auto IV": "1",
+        "Kinect Sports": "1-4", "Hole in the Wall": "1-4", "Payday 2": "1", "Monopoly": "1-4",
+        "NCAA Football 11": "1-2", "NBA 2K11": "1-2", "Monopoly Streets": "1-4",
+        "Halo: Combat Evolved Anniversary": "1-4", "Halo 3": "1-4", "Halo Wars": "1-2", "Halo 3: ODST": "1-4",
+        "Halo 4": "1-4", "Fallout 3": "1", "Far Cry 3": "1", "Forza Horizon": "1",
+        "Call of Duty: Black Ops": "1-2", "Call of Duty: Black Ops II": "1-2",
+        "Call of Duty: Modern Warfare 2": "1-2", "Call of Duty: Modern Warfare 3": "1-2",
+        "Command & Conquer 3: Tiberium Wars": "1", "Dead Island": "1", "Dead Island: Riptide": "1",
+        "Kinect Adventures!": "1-2", "L.A. Noire": "1", "Left 4 Dead": "1-2", "Mafia II": "1",
+        "Midnight Club: Los Angeles": "1"
+    },
+    "xbox-one": {
+        "Titanfall": "1", "Tom Clancy's Rainbow Six Siege": "1", "Tom Clancy's The Division": "1",
+        "Sea of Thieves": "1", "The Elder Scrolls Online: Tamriel Unlimited": "1", "State of Decay 2": "1",
+        "Red Dead Redemption II": "1", "Battlefield Hardline": "1", "Forza Horizon 2": "1", "Just Cause 3": "1",
+        "Battlefield V": "1", "Battlefield 1": "1", "Battlefield 4": "1",
+        "Halo: The Master Chief Collection": "1-4", "Star Wars Battlefront": "1-2",
+        "Call of Duty: Modern Warfare": "1-2", "Cyberpunk 2077": "1", "Destiny": "1", "Destiny 2": "1",
+        "Dying Light": "1", "Fallout 4": "1", "Fallout 76": "1", "Far Cry 4": "1", "Forza Horizon 3": "1",
+        "Forza Motorsport 5": "1", "Grand Theft Auto V": "1", "Halo 5: Guardians": "1", "Halo Wars 2": "1-2"
+    },
+    "nintendo-switch": { "Super Mario Odyssey": "1-2", "Mario Kart 8 Deluxe": "1-4", "Stardew Valley": "1-4" },
+    "game-boy-color": {
+        "Pokémon Blue": "1-2", "Tetris Blast": "1-2", "Tony Hawk's Pro Skater": "1",
+        "Rugrats in Paris": "1", "Who Wants to Be a Millionaire": "1"
+    },
+    "nintendo-ds": {
+        "The Legend of Zelda: Phantom Hourglass": "1", "Brain Age": "1", "Personal Trainer: Cooking": "1"
+    },
+    "omega-entertainment-machine": { "The King of Fighters 2000": "1-2", "Super N-in-1 SNK Multicart": "1-2" },
+    "arcade-golden-tee": {
+        "Golden Tee": "1-4", "Golden Tee 3K": "1-4", "Golden Tee 2K": "1-4", "Golden Tee '99": "1-4", "Golden Tee '98": "1-4"
+    },
+    "arcade-big-buck-hunter": {
+        "Big Buck Hunter Pro": "1-2", "Big Buck Hunter Pro: Open Season": "1-2", "Big Buck Safari": "1-2", "Big Buck Safari: Outback": "1-2"
+    },
+    "steam-deck": {
+        "7 Days to Die": "1", "Ace of Spades": "1", "Among Us": "1", "Ark: Survival Evolved": "1", "Arma 2": "1",
+        "Baldur's Gate 3": "1-2", "Borderlands 2": "1", "Borderlands: The Pre-Sequel": "1", "Call of Duty": "1",
+        "Car Mechanic Simulator 2014": "1", "Contagion": "1", "Content Warning": "1", "Cookie Clicker": "1",
+        "Crawl": "1-4", "Dota 2": "1", "Fallout 76": "1", "The Forest": "1", "Game Dev Tycoon": "1",
+        "Garfield Kart": "1", "Garry's Mod": "1", "Genital Jousting": "1-7", "Grand Theft Auto IV": "1",
+        "Hacker Evolution": "1", "Halo: The Master Chief Collection": "1", "Hell Let Loose": "1",
+        "Tabletop Simulator": "1", "Killing Floor": "1", "Hogwarts Legacy": "1",
+        "The Jackbox Party Pack": "1-8", "The Jackbox Party Pack 2": "1-8", "The Jackbox Party Pack 3": "1-8",
+        "The Jackbox Party Pack 4": "1-8", "The Jackbox Party Pack 5": "1-8", "The Jackbox Party Pack 6": "1-8",
+        "The Jackbox Party Pack 7": "1-8", "The Jackbox Party Pack 8": "1-8", "The Jackbox Party Pack 9": "1-8",
+        "The Jackbox Party Pack 10": "1-8", "Kerbal Space Program": "1", "Left 4 Dead": "1", "Left 4 Dead 2": "1",
+        "Mini Motorways": "1", "Mount Your Friends": "1-8", "Move or Die": "1-4", "Payday 2": "1",
+        "Phasmophobia": "1", "Pico Park": "1-8", "Portal": "1", "Portal 2": "1-2", "Red Dead Redemption 2": "1",
+        "Remnant: From the Ashes": "1", "RimWorld": "1", "Robocraft": "1", "RollerCoaster Tycoon": "1",
+        "Satisfactory": "1", "Stardew Valley": "1-4", "Sid Meier's Civilization VI": "1", "Sonic Adventure 2": "1-2",
+        "Star Wars Jedi: Fallen Order": "1", "Stick Fight": "1-4", "Ultimate Chicken Horse": "1-4",
+        "Unrailed": "1-4", "Viscera Cleanup Detail": "1", "Warframe": "1", "Who's Your Daddy": "1-2"
+    }
+};
+
 // ===== Wishlist — systems not yet in the collection ("Hunting For") =====
 const WISHLIST = [
     { name: "Intellivision", brand: "Mattel", year: 1979 },
@@ -569,5 +687,5 @@ const GAME_WISHLIST = {};
 
 // Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, consoleSlug, findConsole };
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, PLAYERS, consoleSlug, findConsole };
 }

@@ -643,24 +643,33 @@ const PLAYERS = {
     }
 };
 
-// ===== Wishlist — systems not yet in the collection ("Hunting For") =====
+// ===== Wishlist — mass-market consoles & handhelds not yet in the collection ("Hunting For") =====
+// type: "console" | "handheld".  est: rough loose/used market price (USD) — used for the hunt-budget total.
 const WISHLIST = [
-    { name: "Intellivision", brand: "Mattel", year: 1979 },
-    { name: "ColecoVision", brand: "Coleco", year: 1982 },
-    { name: "Game Boy", brand: "Nintendo", year: 1989 },
-    { name: "TurboGrafx-16", brand: "NEC", year: 1989 },
-    { name: "Sega Game Gear", brand: "Sega", year: 1990 },
-    { name: "Philips CD-i", brand: "Philips", year: 1991 },
-    { name: "3DO", brand: "Panasonic", year: 1993 },
-    { name: "Neo Geo Pocket", brand: "SNK", year: 1998 },
-    { name: "Sega Dreamcast", brand: "Sega", year: 1999 },
-    { name: "PlayStation 3", brand: "Sony", year: 2006 },
-    { name: "PlayStation Vita", brand: "Sony", year: 2011 },
-    { name: "Nintendo 3DS", brand: "Nintendo", year: 2011 },
-    { name: "Wii U", brand: "Nintendo", year: 2012 },
-    { name: "PlayStation 4", brand: "Sony", year: 2013 },
-    { name: "PlayStation 5", brand: "Sony", year: 2020 },
-    { name: "Xbox Series X", brand: "Microsoft", year: 2020 }
+    { name: "Magnavox Odyssey", brand: "Magnavox", year: 1972, type: "console", est: 120 },
+    { name: "Intellivision", brand: "Mattel", year: 1979, type: "console", est: 45 },
+    { name: "Atari 5200", brand: "Atari", year: 1982, type: "console", est: 70 },
+    { name: "ColecoVision", brand: "Coleco", year: 1982, type: "console", est: 90 },
+    { name: "Atari 7800", brand: "Atari", year: 1986, type: "console", est: 90 },
+    { name: "Game Boy", brand: "Nintendo", year: 1989, type: "handheld", est: 60 },
+    { name: "Atari Lynx", brand: "Atari", year: 1989, type: "handheld", est: 90 },
+    { name: "TurboGrafx-16", brand: "NEC", year: 1989, type: "console", est: 130 },
+    { name: "Sega Game Gear", brand: "Sega", year: 1990, type: "handheld", est: 70 },
+    { name: "Philips CD-i", brand: "Philips", year: 1991, type: "console", est: 150 },
+    { name: "Sega CD", brand: "Sega", year: 1992, type: "console", est: 130 },
+    { name: "3DO", brand: "Panasonic", year: 1993, type: "console", est: 150 },
+    { name: "Sega 32X", brand: "Sega", year: 1994, type: "console", est: 70 },
+    { name: "Virtual Boy", brand: "Nintendo", year: 1995, type: "console", est: 250 },
+    { name: "Sega Nomad", brand: "Sega", year: 1995, type: "handheld", est: 180 },
+    { name: "Neo Geo Pocket Color", brand: "SNK / Neo Geo", year: 1999, type: "handheld", est: 120 },
+    { name: "Sega Dreamcast", brand: "Sega", year: 1999, type: "console", est: 110 },
+    { name: "PlayStation 3", brand: "Sony", year: 2006, type: "console", est: 70 },
+    { name: "Nintendo 3DS", brand: "Nintendo", year: 2011, type: "handheld", est: 90 },
+    { name: "PlayStation Vita", brand: "Sony", year: 2011, type: "handheld", est: 140 },
+    { name: "Wii U", brand: "Nintendo", year: 2012, type: "console", est: 110 },
+    { name: "PlayStation 4", brand: "Sony", year: 2013, type: "console", est: 130 },
+    { name: "PlayStation 5", brand: "Sony", year: 2020, type: "console", est: 400 },
+    { name: "Xbox Series X|S", brand: "Microsoft", year: 2020, type: "console", est: 380 }
 ];
 
 // Brand for each owned console (by slug) — used by the insights dashboard.
@@ -680,7 +689,9 @@ const BRAND = {
 const BRAND_COLOR = {
     "Nintendo": "#E60012", "Sega": "#66c0f4", "Sony": "#003791",
     "Microsoft": "#107C10", "Atari": "#E67E22", "SNK / Neo Geo": "#FFD700",
-    "Valve": "#1b2838", "Arcade1Up": "#9b59b6"
+    "Valve": "#1b2838", "Arcade1Up": "#9b59b6",
+    "Magnavox": "#16a085", "Mattel": "#c0392b", "Coleco": "#d68910",
+    "NEC": "#ff6b35", "Philips": "#2980b9", "Panasonic": "#5d6d7e"
 };
 
 // ===== Owned accessories per console =====

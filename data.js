@@ -430,9 +430,12 @@ const GAMES = {
         { title: "Tetris Blast", rating: 5, price: 10 },
         { title: "Tony Hawk's Pro Skater", price: 0 },
         { title: "Rugrats in Paris", rating: 3, price: 0 },
-        { title: "Who Wants to Be a Millionaire", rating: 2, price: 0 }
+        { title: "Who Wants to Be a Millionaire", rating: 2, price: 0 },
+        { title: "Pokémon Gold" }
     ],
-    "game-boy-advance": [],
+    "game-boy-advance": [
+        { title: "Pokémon FireRed" }
+    ],
     "nintendo-ds": [
         { title: "The Legend of Zelda: Phantom Hourglass", price: 25 },
         { title: "Brain Age", rating: 3 },
@@ -605,8 +608,9 @@ const PLAYERS = {
     "nintendo-switch": { "Super Mario Odyssey": "1-2", "Mario Kart 8 Deluxe": "1-4", "Stardew Valley": "1-4" },
     "game-boy-color": {
         "Pokémon Blue": "1-2", "Tetris Blast": "1-2", "Tony Hawk's Pro Skater": "1",
-        "Rugrats in Paris": "1", "Who Wants to Be a Millionaire": "1"
+        "Rugrats in Paris": "1", "Who Wants to Be a Millionaire": "1", "Pokémon Gold": "1-2"
     },
+    "game-boy-advance": { "Pokémon FireRed": "1-2" },
     "nintendo-ds": {
         "The Legend of Zelda: Phantom Hourglass": "1", "Brain Age": "1", "Personal Trainer: Cooking": "1"
     },
@@ -682,7 +686,21 @@ const BRAND_COLOR = {
 // ACCESSORIES["<slug>"] = [ { name: "Extra Controller", price: 20, qty: 1, img: "images/..." }, ... ]
 // price = what you paid (counts toward Total Invested). Optional: qty, img.
 // Current value uses values.json -> accessories[slug][name] if present, otherwise the price paid.
-const ACCESSORIES = {};
+const ACCESSORIES = {
+    "atari-2600": [ { name: "Joystick", qty: 3 } ],
+    "super-nintendo": [ { name: "Controller", qty: 2 } ],
+    "n64": [ { name: "Controller", qty: 4 }, { name: "Rumble Pak", qty: 1 }, { name: "Transfer Pak", qty: 1 } ],
+    "atari-jaguar": [ { name: "Controller", qty: 2 } ],
+    "genesis": [ { name: "Controller", qty: 4 } ],
+    "gamecube": [ { name: "Controller", qty: 4 }, { name: "DK Bongos", qty: 1 } ],
+    "playstation-1": [ { name: "Controller", qty: 1 } ],
+    "playstation-2": [ { name: "Controller", qty: 2 } ],
+    "xbox": [ { name: "Controller", qty: 3 } ],
+    "xbox-360": [ { name: "Controller", qty: 4 }, { name: "Kinect", qty: 1 } ],
+    "xbox-one": [ { name: "Controller", qty: 5 }, { name: "Kinect", qty: 1 } ],
+    "omega-entertainment-machine": [ { name: "Neo Geo MVS Controller", qty: 2 } ],
+    "game-boy-color": [ { name: "Game Boy Printer", qty: 1 } ]
+};
 
 // ===== Per-console games wishlist (titles you're hunting for) =====
 // GAME_WISHLIST["<slug>"] = [ "Game Title", "Another Game", ... ]

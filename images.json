@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-04T16:52:08.302Z",
+  "generated": "2026-06-29T15:05:04.019Z",
   "games": {
     "atari-2600": {
       "Asteroids": "images/games/atari-2600/asteroids.png",
@@ -119,7 +119,8 @@
       "Tony Hawk's Pro Skater": "images/games/game-boy-color/tony-hawk-s-pro-skater.png",
       "Rugrats in Paris": "images/games/game-boy-color/rugrats-in-paris.png",
       "Who Wants to Be a Millionaire": "images/games/game-boy-color/who-wants-to-be-a-millionaire.png",
-      "Tetris Blast": "images/games/game-boy-color/tetris-blast.png"
+      "Tetris Blast": "images/games/game-boy-color/tetris-blast.png",
+      "Pokémon Gold": "images/games/game-boy-color/pokemon-gold.png"
     },
     "nintendo-ds": {
       "The Legend of Zelda: Phantom Hourglass": "images/games/nintendo-ds/the-legend-of-zelda-phantom-hourglass.png",
@@ -314,6 +315,9 @@
       "Big Buck Hunter Pro: Open Season": "images/games/arcade-big-buck-hunter/big-buck-hunter-pro-open-season.png",
       "Big Buck Safari": "images/games/arcade-big-buck-hunter/big-buck-safari.png",
       "Big Buck Safari: Outback": "images/games/arcade-big-buck-hunter/big-buck-safari-outback.png"
+    },
+    "game-boy-advance": {
+      "Pokémon FireRed": "images/games/game-boy-advance/pokemon-firered.png"
     }
   }
 }

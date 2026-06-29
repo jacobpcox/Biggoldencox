@@ -421,7 +421,7 @@
                 accBlock = `
                     <div class="subsection">
                         <h2 class="section-title">Accessories</h2>
-                        <p class="section-sub">${accessories.length} accessor${accessories.length === 1 ? "y" : "ies"} · ${money(accSpend)} spent.</p>
+                        <p class="section-sub">${accessories.length} accessor${accessories.length === 1 ? "y" : "ies"}${accSpend > 0 ? ` · ${money(accSpend)} spent` : ""}.</p>
                         <div class="acc-grid">${rows}</div>
                     </div>`;
             }

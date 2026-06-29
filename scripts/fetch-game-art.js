@@ -32,6 +32,7 @@ const LIBRETRO = {
   "gamecube": "Nintendo_-_GameCube",
   "wii": "Nintendo_-_Wii",
   "game-boy-color": "Nintendo_-_Game_Boy_Color",
+  "game-boy-advance": "Nintendo_-_Game_Boy_Advance",
   "nintendo-ds": "Nintendo_-_Nintendo_DS",
   "genesis": "Sega_-_Mega_Drive_-_Genesis",
   "sega-saturn": "Sega_-_Saturn",
@@ -153,6 +154,7 @@ async function steamAppId(term) {
     fs.mkdirSync(dir, { recursive: true });
     manifest.games[slug] = manifest.games[slug] || {};
     for (const g of list) {
+      if (manifest.games[slug][g.title]) { got++; continue; }   // already covered (any source) — leave as-is
       const file = path.join(dir, slugify(g.title) + ".png");
       const rel = `images/games/${slug}/${slugify(g.title)}.png`;
       if (fs.existsSync(file)) { manifest.games[slug][g.title] = rel; got++; continue; }
@@ -175,6 +177,7 @@ async function steamAppId(term) {
     fs.mkdirSync(dir, { recursive: true });
     manifest.games["steam-deck"] = manifest.games["steam-deck"] || {};
     for (const g of steam) {
+      if (manifest.games["steam-deck"][g.title]) { got++; continue; }   // already covered — leave as-is
       const file = path.join(dir, slugify(g.title) + ".jpg");
       const rel = `images/games/steam-deck/${slugify(g.title)}.jpg`;
       if (fs.existsSync(file)) { manifest.games["steam-deck"][g.title] = rel; got++; continue; }

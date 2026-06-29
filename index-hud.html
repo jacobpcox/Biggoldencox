@@ -152,6 +152,22 @@
   .facts{display:flex;flex-direction:column;gap:9px}.fact{display:flex;justify-content:space-between;gap:12px;font-size:12px}.fact .k{color:var(--dim)}.fact .v{color:var(--cy);text-align:right}
   .panel.wide{column-span:all}
   .factsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px 26px}
+  /* donut chart */
+  .donut{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .donutsvg{width:116px;height:116px;flex:none}
+  .donutsvg circle{transition:stroke-dasharray .9s cubic-bezier(.2,.8,.2,1)}
+  .donutsvg .dc1{font-size:6.4px;fill:var(--ink);text-anchor:middle;font-weight:700;font-family:"Bahnschrift",sans-serif}
+  .donutsvg .dc2{font-size:2.7px;fill:var(--dim);text-anchor:middle;letter-spacing:.14em}
+  .dleg{flex:1;min-width:128px;display:flex;flex-direction:column;gap:6px}
+  .dleg .row{display:flex;align-items:center;gap:8px;font-size:11px}
+  .dleg .sw{width:10px;height:10px;border-radius:2px;flex:none;box-shadow:0 0 6px rgba(0,0,0,.4)}
+  .dleg .nm{color:var(--ink)}.dleg .v{margin-left:auto;color:var(--dim);font-variant-numeric:tabular-nums}
+  /* column chart */
+  .cols{display:flex;align-items:flex-end;gap:8px;min-height:116px;padding-top:6px}
+  .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+  .col .bar{width:100%;max-width:36px;height:0;background:linear-gradient(#27d3ee,#1aa7bd);border:1px solid #27d3ee;box-shadow:0 0 8px rgba(39,211,238,.3);transition:height .9s cubic-bezier(.2,.8,.2,1)}
+  .col .cn{font-size:9px;letter-spacing:.05em;color:var(--dim)}
+  .col .cval2{font-size:10px;color:var(--cy);font-variant-numeric:tabular-nums}
 
   .wish{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:8px 18px 20px;position:relative;z-index:2}
   @media(max-width:680px){.wish{grid-template-columns:1fr 1fr}}
@@ -228,13 +244,14 @@
     <div class="view" id="view-intel" hidden>
       <div class="seclabel">// Intel</div>
       <div class="ins">
-        <div class="panel"><p class="ph">Value by brand</p><div id="brands"></div></div>
+        <div class="panel wide"><p class="ph">At a glance</p><div class="facts factsgrid" id="facts"></div></div>
+        <div class="panel"><p class="ph">Portfolio by brand</p><div class="donut" id="donut"></div></div>
+        <div class="panel"><p class="ph">Games by decade</p><div id="decade"></div></div>
         <div class="panel"><p class="ph">Where the money went</p><div id="spend"></div></div>
         <div class="panel"><p class="ph">Most valuable systems</p><div id="topsystems"></div></div>
         <div class="panel"><p class="ph">Most valuable games</p><div id="topgames"></div></div>
         <div class="panel"><p class="ph">Top gainers · %</p><div id="gainers"></div></div>
         <div class="panel"><p class="ph">Biggest $ gains</p><div id="dollargains"></div></div>
-        <div class="panel wide"><p class="ph">At a glance</p><div class="facts factsgrid" id="facts"></div></div>
       </div>
     </div>
 
@@ -370,10 +387,28 @@
     var allG=Object.values(GAMES).flat();
     var slugName={}; CONSOLES.forEach(function(c){ slugName[consoleSlug(c)]=shortName(c); });
 
-    // value by brand
+    // portfolio by brand (donut)
     var brands={}; CONSOLES.forEach(function(c){var b=BRAND[consoleSlug(c)]||"Other";brands[b]=(brands[b]||0)+curOf(c);});
-    var arr=Object.entries(brands).sort(function(a,b){return b[1]-a[1];}); var bmax=arr.length?arr[0][1]:1;
-    document.getElementById("brands").innerHTML=arr.map(function(e){ return barRow(e[0],e[1],e[1]/bmax*100); }).join("");
+    var barr=Object.entries(brands).sort(function(a,b){return b[1]-a[1];});
+    var btotal=barr.reduce(function(s,e){return s+e[1];},0)||1;
+    var cum=0, segs=barr.map(function(e){
+      var pct=e[1]/btotal*100, color=(typeof BRAND_COLOR!=="undefined"&&BRAND_COLOR[e[0]])||"#27d3ee";
+      var seg='<circle cx="21" cy="21" r="15.915" fill="none" stroke="'+color+'" stroke-width="5.5" stroke-dasharray="'+pct.toFixed(2)+' '+(100-pct).toFixed(2)+'" stroke-dashoffset="'+(25-cum).toFixed(2)+'"></circle>';
+      cum+=pct; return seg;
+    }).join("");
+    var dsvg='<svg viewBox="0 0 42 42" class="donutsvg"><circle cx="21" cy="21" r="15.915" fill="none" stroke="#0e2026" stroke-width="5.5"></circle>'+segs
+      +'<text x="21" y="20.4" class="dc1">$'+Math.round(btotal/1000)+'K</text><text x="21" y="25" class="dc2">TOTAL VALUE</text></svg>';
+    var dleg='<div class="dleg">'+barr.map(function(e){var color=(typeof BRAND_COLOR!=="undefined"&&BRAND_COLOR[e[0]])||"#27d3ee";return '<div class="row"><span class="sw" style="background:'+color+'"></span><span class="nm">'+e[0]+'</span><span class="v">'+money(e[1])+'</span></div>';}).join("")+'</div>';
+    document.getElementById("donut").innerHTML=dsvg+dleg;
+
+    // games by decade (column chart)
+    var dec={}; CONSOLES.forEach(function(c){var y=RELEASE_YEAR[c.name]; if(!y)return; var d=Math.floor(y/10)*10; dec[d]=(dec[d]||0)+gamesOf(consoleSlug(c)).length;});
+    var dkeys=Object.keys(dec).map(Number).sort(function(a,b){return a-b;});
+    var dmax=dkeys.reduce(function(m,k){return Math.max(m,dec[k]);},1);
+    document.getElementById("decade").innerHTML='<div class="cols">'+dkeys.map(function(k){
+      var h=Math.round(dec[k]/dmax*84);
+      return '<div class="col"><div class="cval2">'+dec[k]+'</div><div class="bar" data-h="'+h+'px"></div><div class="cn">\''+String(k).slice(2)+'s</div></div>';
+    }).join("")+'</div>';
 
     // where the money went (invested split)
     var consoleSpend=CONSOLES.reduce(function(a,c){return a+(c.price||0);},0);
@@ -440,6 +475,10 @@
     document.querySelectorAll('#view-intel .btrack span').forEach(function(sp){
       if(rm){ sp.style.width=sp.dataset.w; return; }
       sp.style.width='0'; requestAnimationFrame(function(){requestAnimationFrame(function(){sp.style.width=sp.dataset.w;});});
+    });
+    document.querySelectorAll('#view-intel .cols .bar').forEach(function(b){
+      if(rm){ b.style.height=b.dataset.h; return; }
+      b.style.height='0'; requestAnimationFrame(function(){requestAnimationFrame(function(){b.style.height=b.dataset.h;});});
     });
   }
 

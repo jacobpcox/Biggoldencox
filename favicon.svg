@@ -1,6 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <rect width="48" height="48" rx="11" fill="#16202b"/>
-  <g transform="translate(12,12)">
-    <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM11 13H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" fill="#FFD700"/>
+  <g transform="translate(6,6) scale(0.5625)">
+    <!-- tail feathers (behind), sweeping up-left -->
+    <path d="M27 45 C13 45 6 33 5 16 C16 22 24 31 29 43 Z" fill="#FFD700"/>
+    <path d="M28 46 C18 47 11 38 11 25 C20 30 26 37 31 45 Z" fill="#16202b"/>
+    <path d="M29 46 C19 47 13 39 13 27 C21 31 27 38 31 45 Z" fill="#FFD700"/>
+    <!-- body -->
+    <ellipse cx="31" cy="40" rx="14" ry="11" fill="#FFD700"/>
+    <!-- breast / neck up to head -->
+    <path d="M39 37 C39 27 41 21 46 17 L51 21 C49 27 47 33 46 39 Z" fill="#FFD700"/>
+    <!-- head -->
+    <circle cx="47" cy="20" r="6.4" fill="#FFD700"/>
+    <!-- comb (3 serrations) -->
+    <path d="M40 15 C40 10 44 9 45 13 C46 8 50 8 50 13 C51 9 54 11 53 16 C49 14 44 14 40 15 Z" fill="#FFD700"/>
+    <!-- beak (open, crowing) -->
+    <path d="M52 17 L62 18 L53 21 Z" fill="#FFD700"/>
+    <path d="M52 22 L61 25 L53 25 Z" fill="#FFD700"/>
+    <!-- wattle -->
+    <path d="M51 25 C49 31 55 32 54 25 Z" fill="#FFD700"/>
+    <!-- eye -->
+    <circle cx="48.5" cy="19" r="1.7" fill="#16202b"/>
+    <!-- wing -->
+    <path d="M25 39 C31 33 40 35 43 42 C36 45 29 45 25 39 Z" fill="#16202b"/>
+    <path d="M27 40 C32 36 39 37 41 42 C35 44 30 44 27 40 Z" fill="#FFD700"/>
+    <!-- legs + feet -->
+    <path d="M29 50 L29 58 M35 50 L35 58" stroke="#FFD700" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M25 59 L29 57 L33 59 M31 59 L35 57 L39 59" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 </svg>

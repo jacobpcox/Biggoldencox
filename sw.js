@@ -1,6 +1,6 @@
 // biggoldencox service worker — offline shell + runtime caching.
 // Bump CACHE when the shell changes to force an update.
-const CACHE = "bgcox-v2";
+const CACHE = "bgcox-v3";
 const CORE = [
   "./",
   "index.html",

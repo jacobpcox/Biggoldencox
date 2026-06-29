@@ -1185,21 +1185,17 @@
             const consoleCount = consoles.filter(c => c.type === "console").length;
             const handheldCount = consoles.filter(c => c.type === "handheld").length;
             const arcadeCount = consoles.filter(c => c.type === "arcade").length;
-            const allGames = (typeof GAMES !== "undefined") ? Object.values(GAMES).flat() : [];
-            const gamesOwned = allGames.length;
-            const gameSpend = allGames.reduce((s, g) => s + (typeof g.price === "number" ? g.price : 0), 0);
-            const consoleSpend = consoles.reduce((sum, c) => sum + (c.price || 0), 0);
-            const spent = consoleSpend + gameSpend;
+            const gamesOwned = (typeof GAMES !== "undefined") ? Object.values(GAMES).flat().length : 0;
+            // Total Invested = console + games + accessories paid (via paidOf)
+            const spent = consoles.reduce((sum, c) => sum + paidOf(c), 0);
             const fmt = n => "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 });
 
-            // Current market value (from values.json). Only shown once values exist.
+            // Current market value (console + games + accessories). Only shown once values exist.
             const V = window.VALUES;
             let valuePill = "";
             const hasValues = V && ((V.consoles && Object.keys(V.consoles).length) || (V.games && Object.keys(V.games).length));
             if (hasValues) {
-                let current = 0;
-                consoles.forEach(c => { current += ((V.consoles && V.consoles[consoleSlug(c)]) || 0) * (c.qty || 1); });
-                if (V.games) Object.values(V.games).forEach(m => Object.values(m).forEach(v => current += v || 0));
+                const current = consoles.reduce((sum, c) => sum + currentValueOf(c), 0);
                 valuePill = `<div class="stat-pill"><div class="num">${fmt(current)}</div><div class="lbl">Current Value</div></div>`;
             }
 
@@ -1216,8 +1212,10 @@
         const money = n => "$" + Number(n).toLocaleString(undefined, { maximumFractionDigits: 2 });
 
         function paidOf(c) {
+            const s = consoleSlug(c);
             let p = (c.price || 0);
-            (GAMES[consoleSlug(c)] || []).forEach(g => { if (typeof g.price === "number") p += g.price; });
+            (GAMES[s] || []).forEach(g => { if (typeof g.price === "number") p += g.price; });
+            (ACCESSORIES[s] || []).forEach(a => { if (typeof a.price === "number") p += a.price; });
             return p;
         }
         function currentValueOf(c) {
@@ -1225,6 +1223,10 @@
             const s = consoleSlug(c);
             let v = ((V.consoles && V.consoles[s]) || 0) * (c.qty || 1);
             if (V.games && V.games[s]) v += Object.values(V.games[s]).reduce((a, b) => a + (b || 0), 0);
+            (ACCESSORIES[s] || []).forEach(a => {
+                const ex = V.accessories && V.accessories[s] && V.accessories[s][a.name];
+                v += (typeof ex === "number" ? ex : (typeof a.price === "number" ? a.price : 0));
+            });
             return v;
         }
 

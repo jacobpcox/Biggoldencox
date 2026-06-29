@@ -248,7 +248,7 @@ const GAMES = {
     "atari-jaguar": [
         { title: "Alien vs Predator", price: 30 },
         { title: "Iron Soldier", price: 30 },
-        { title: "Wolfenstein 3D" }
+        { title: "Wolfenstein 3D", price: 75 }
     ],
     "sega-saturn": [
         { title: "Blazing Heroes", price: 35 }
@@ -431,10 +431,10 @@ const GAMES = {
         { title: "Tony Hawk's Pro Skater", price: 0 },
         { title: "Rugrats in Paris", rating: 3, price: 0 },
         { title: "Who Wants to Be a Millionaire", rating: 2, price: 0 },
-        { title: "Pokémon Gold" }
+        { title: "Pokémon Gold", price: 20 }
     ],
     "game-boy-advance": [
-        { title: "Pokémon FireRed" }
+        { title: "Pokémon FireRed", price: 20 }
     ],
     "nintendo-ds": [
         { title: "The Legend of Zelda: Phantom Hourglass", price: 25 },
@@ -688,18 +688,18 @@ const BRAND_COLOR = {
 // Current value uses values.json -> accessories[slug][name] if present, otherwise the price paid.
 const ACCESSORIES = {
     "atari-2600": [ { name: "Joystick", qty: 3 } ],
-    "super-nintendo": [ { name: "Controller", qty: 2 } ],
-    "n64": [ { name: "Controller", qty: 4 }, { name: "Rumble Pak", qty: 1 }, { name: "Transfer Pak", qty: 1 } ],
-    "atari-jaguar": [ { name: "Controller", qty: 2 } ],
-    "genesis": [ { name: "Controller", qty: 4 } ],
-    "gamecube": [ { name: "Controller", qty: 4 }, { name: "DK Bongos", qty: 1 } ],
-    "playstation-1": [ { name: "Controller", qty: 1 } ],
-    "playstation-2": [ { name: "Controller", qty: 2 } ],
-    "xbox": [ { name: "Controller", qty: 3 } ],
-    "xbox-360": [ { name: "Controller", qty: 4 }, { name: "Kinect", qty: 1 } ],
-    "xbox-one": [ { name: "Controller", qty: 5 }, { name: "Kinect", qty: 1 } ],
-    "omega-entertainment-machine": [ { name: "Neo Geo MVS Controller", qty: 2 } ],
-    "game-boy-color": [ { name: "Game Boy Printer", qty: 1 } ]
+    "super-nintendo": [ { name: "Controller", qty: 2, price: 30 } ],
+    "n64": [ { name: "Controller", qty: 4, price: 50 }, { name: "Rumble Pak", qty: 1 }, { name: "Transfer Pak", qty: 1 } ],
+    "atari-jaguar": [ { name: "Controller", qty: 2, price: 50 } ],
+    "genesis": [ { name: "Controller", qty: 4, price: 30 } ],
+    "gamecube": [ { name: "Controller", qty: 4, price: 0 }, { name: "DK Bongos", qty: 1, price: 0 } ],
+    "playstation-1": [ { name: "Controller", qty: 1, price: 20 } ],
+    "playstation-2": [ { name: "Controller", qty: 2, price: 0 } ],
+    "xbox": [ { name: "Controller", qty: 3, price: 0 } ],
+    "xbox-360": [ { name: "Controller", qty: 4, price: 0 }, { name: "Kinect", qty: 1, price: 0 } ],
+    "xbox-one": [ { name: "Controller", qty: 5, price: 200 }, { name: "Kinect", qty: 1 } ],
+    "omega-entertainment-machine": [ { name: "Neo Geo MVS Controller", qty: 2, price: 100 } ],
+    "game-boy-color": [ { name: "Game Boy Printer", qty: 1, price: 50 } ]
 };
 
 // ===== Per-console games wishlist (titles you're hunting for) =====

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-29T15:05:04.019Z",
+  "generated": "2026-06-29T15:39:48.116Z",
   "games": {
     "atari-2600": {
       "Asteroids": "images/games/atari-2600/asteroids.png",
@@ -32,7 +32,8 @@
       "Memory Match": "images/games/atari-2600/memory-match.png",
       "Space Combat": "images/games/atari-2600/space-combat.png",
       "Tank Plus": "images/games/atari-2600/tank-plus.png",
-      "Spelling": "images/games/atari-2600/spelling.png"
+      "Spelling": "images/games/atari-2600/spelling.png",
+      "Dig Dug": "images/games/atari-2600/dig-dug.png"
     },
     "atari-jaguar": {
       "Alien vs Predator": "images/games/atari-jaguar/alien-vs-predator.png",

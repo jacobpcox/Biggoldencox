@@ -61,7 +61,8 @@
       "Space Jockey": 5.8,
       "Target Fun": 5.89,
       "Basketball": 5.46,
-      "Pong Sports": 16.48
+      "Pong Sports": 16.48,
+      "Dig Dug": 9
     },
     "nes": {
       "Zelda II: The Adventure of Link": 22.5,
@@ -271,7 +272,9 @@
   },
   "accessories": {
     "atari-2600": {
-      "Joystick": 36
+      "Joystick": 36,
+      "Keyboard Controller": 30,
+      "Instruction Booklets (all games)": 25
     },
     "super-nintendo": {
       "Controller": 44
@@ -279,7 +282,10 @@
     "n64": {
       "Controller": 88,
       "Rumble Pak": 10,
-      "Transfer Pak": 15
+      "Transfer Pak": 15,
+      "Super Smash Bros. Manual": 12,
+      "Mario Golf Manual": 10,
+      "GoldenEye 007 Strategy Guide": 20
     },
     "atari-jaguar": {
       "Controller": 60
@@ -313,6 +319,10 @@
     },
     "game-boy-color": {
       "Game Boy Printer": 50
+    },
+    "nes": {
+      "Controller": 36,
+      "Power Pad": 20
     }
   }
 }

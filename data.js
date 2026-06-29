@@ -235,7 +235,8 @@ const GAMES = {
         { title: "Space Jockey", price: 0 },
         { title: "Target Fun", price: 0 },
         { title: "Basketball", price: 0 },
-        { title: "Pong Sports", price: 0 }
+        { title: "Pong Sports", price: 0 },
+        { title: "Dig Dug", price: 0 }
     ],
     "super-nintendo": [
         { title: "Mega Man X", price: 40 },
@@ -535,7 +536,7 @@ const PLAYERS = {
         "Donkey Kong": "1-2", "Warlords": "1-4", "E.T. the Extra-Terrestrial": "1", "Video Chess": "1-2",
         "Sky Diver": "1-2", "Star Raiders": "1", "Adventure": "1", "Stellar Track": "1",
         "Laser Blast": "1-2", "Brain Games": "1-2", "Memory Match": "1-2", "Space Jockey": "1-2",
-        "Target Fun": "1-2", "Basketball": "1-2", "Pong Sports": "1-4"
+        "Target Fun": "1-2", "Basketball": "1-2", "Pong Sports": "1-4", "Dig Dug": "1-2"
     },
     "nes": {
         "Zelda II: The Adventure of Link": "1", "Game Genie": "1", "Tetris": "1", "Super Mario Bros. 3": "1-2",
@@ -687,9 +688,10 @@ const BRAND_COLOR = {
 // price = what you paid (counts toward Total Invested). Optional: qty, img.
 // Current value uses values.json -> accessories[slug][name] if present, otherwise the price paid.
 const ACCESSORIES = {
-    "atari-2600": [ { name: "Joystick", qty: 3, price: 10 } ],
+    "atari-2600": [ { name: "Joystick", qty: 3, price: 10 }, { name: "Keyboard Controller", qty: 2, price: 0 }, { name: "Instruction Booklets (all games)", price: 0 } ],
+    "nes": [ { name: "Controller", qty: 3, price: 30 }, { name: "Power Pad", qty: 1, price: 0 } ],
     "super-nintendo": [ { name: "Controller", qty: 2, price: 30 } ],
-    "n64": [ { name: "Controller", qty: 4, price: 50 }, { name: "Rumble Pak", qty: 1, price: 0 }, { name: "Transfer Pak", qty: 1, price: 0 } ],
+    "n64": [ { name: "Controller", qty: 4, price: 50 }, { name: "Rumble Pak", qty: 1, price: 0 }, { name: "Transfer Pak", qty: 1, price: 0 }, { name: "Super Smash Bros. Manual", price: 10 }, { name: "Mario Golf Manual", price: 10 }, { name: "GoldenEye 007 Strategy Guide", price: 20 } ],
     "atari-jaguar": [ { name: "Controller", qty: 2, price: 50 } ],
     "genesis": [ { name: "Controller", qty: 4, price: 30 } ],
     "gamecube": [ { name: "Controller", qty: 4, price: 0 }, { name: "DK Bongos", qty: 1, price: 0 } ],

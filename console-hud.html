@@ -114,6 +114,12 @@
   .empty{padding:46px 18px;text-align:center;color:var(--dim);position:relative;z-index:2}
   .empty .big{font-size:40px;margin-bottom:10px}
 
+  .tabbar{display:flex;gap:8px;padding:16px 18px 0;position:relative;z-index:2;flex-wrap:wrap}
+  .tab{font:inherit;background:none;border:1px solid var(--line);cursor:pointer;color:var(--dim);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border-radius:3px;transition:all .15s}
+  .tabbar .tab:hover:not(.a){color:var(--cy);border-color:var(--cy)}
+  .tabbar .tab.a{color:#06121a;background:var(--cy);border-color:var(--cy);font-weight:700;box-shadow:0 0 12px rgba(39,211,238,.35)}
+  .view[hidden]{display:none}
+
   .acc{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:10px 18px 18px;position:relative;z-index:2}
   @media(max-width:680px){.acc{grid-template-columns:1fr 1fr}}@media(max-width:430px){.acc{grid-template-columns:1fr}}
   .acard{display:flex;align-items:center;gap:11px;border:1px solid var(--line);background:var(--panel2);padding:10px 12px}
@@ -248,16 +254,16 @@
         +'</div></div>';
     }
 
-    // games
-    var gamesHTML;
+    // library (games)
+    var libBody;
     if(games.length){
-      gamesHTML='<div class="seclabel">// Library · <span>'+games.length+' titles</span></div><div class="grid" id="grid">'+games.map(function(g){return gameCard(g,c.icon,slug);}).join("")+'</div>';
+      libBody='<div class="grid" id="grid">'+games.map(function(g){return gameCard(g,c.icon,slug);}).join("")+'</div>';
     } else {
-      gamesHTML='<div class="seclabel">// Library</div><div class="empty"><div class="big">'+c.icon+'</div><div>Games coming soon — library still being added.</div></div>';
+      libBody='<div class="empty"><div class="big">'+c.icon+'</div><div>Games coming soon — library still being added.</div></div>';
     }
 
     // accessories
-    var accHTML="";
+    var accBody="";
     if(accessories.length){
       var rows=accessories.map(function(a){
         var aph='<div style="font-size:20px">🎛️</div>';
@@ -266,19 +272,36 @@
         var q=(a.qty&&a.qty>1)?'<span class="q">×'+a.qty+'</span>':"";
         return '<div class="acard"><div class="aimg">'+img+'</div><div><div class="an">'+esc(a.name)+q+'</div>'+(pr?'<div class="ap">'+pr+'</div>':"")+'</div></div>';
       }).join("");
-      accHTML='<div class="seclabel">// Accessories · <span>'+accessories.length+(accSpend>0?' · '+money(accSpend)+' spent':'')+'</span></div><div class="acc">'+rows+'</div>';
+      accBody='<div class="acc">'+rows+'</div>';
     }
 
     // games wishlist
-    var wishHTML="";
+    var wishBody="";
     if(wishlist.length){
-      wishHTML='<div class="seclabel">// Hunting for · <span>'+wishlist.length+' games</span></div><div class="gwish">'+wishlist.map(function(t){return '<div class="gw">'+esc(t)+'</div>';}).join("")+'</div>';
+      wishBody='<div class="gwish">'+wishlist.map(function(t){return '<div class="gw">'+esc(t)+'</div>';}).join("")+'</div>';
     }
+
+    // tabs: Library always; Accessories / Hunting only when populated
+    var tabs=[{id:'lib',label:'Library · '+games.length}];
+    if(accessories.length) tabs.push({id:'acc',label:'Accessories · '+accessories.length});
+    if(wishlist.length) tabs.push({id:'hunt',label:'Hunting · '+wishlist.length});
+    var hasTabs=tabs.length>1;
+    var tabbar=hasTabs?'<div class="tabbar">'+tabs.map(function(t,i){return '<button class="tab'+(i===0?' a':'')+'" data-tab="'+t.id+'">'+t.label+'</button>';}).join("")+'</div>':'';
+    var libLabel=hasTabs?'':'<div class="seclabel">// Library · <span>'+games.length+' titles</span></div>';
+    var content='<div class="view" id="view-lib">'+libLabel+libBody+'</div>'
+      +(accessories.length?'<div class="view" id="view-acc"'+(hasTabs?' hidden':'')+'>'+accBody+'</div>':'')
+      +(wishlist.length?'<div class="view" id="view-hunt"'+(hasTabs?' hidden':'')+'>'+wishBody+'</div>':'');
 
     app.innerHTML='<div class="bar"><div class="brand">&gt; <b>BIGGOLDENCOX</b> // SYSTEM</div><a class="back" href="index-hud.html">◂ Vault</a></div>'
       +'<div class="bootstrip">&gt; <span id="boottext">SYSTEM LINKED</span></div>'
-      +heroHTML+statusHTML+gamesHTML+accHTML+wishHTML
+      +heroHTML+statusHTML+tabbar+content
       +'<div class="foot">Gaming across all platforms <span>&hearts;</span> since 1996 · HUD preview</div>';
+
+    document.querySelectorAll('.tabbar .tab').forEach(function(t){ t.addEventListener('click',function(){
+      var name=t.dataset.tab;
+      document.querySelectorAll('.view').forEach(function(v){ v.hidden = (v.id!=='view-'+name); });
+      document.querySelectorAll('.tabbar .tab').forEach(function(x){ x.classList.toggle('a', x===t); });
+    }); });
 
     window.scrollTo(0,0);
     animate(slug);

@@ -49,6 +49,10 @@
   .bar .brand{font-size:13px;letter-spacing:.16em;color:var(--cy-dim)} .bar .brand b{color:var(--cy);text-shadow:0 0 12px rgba(39,211,238,.45)}
   .bar .nav{display:flex;gap:16px;font-size:11px;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
   .bar .nav a:hover{color:var(--cy)} .bar .nav .a{color:var(--ink);border-bottom:2px solid var(--cy);padding-bottom:2px}
+  .bar .nav .tab{font:inherit;background:none;border:0;cursor:pointer;color:var(--dim);font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:0 0 4px;border-bottom:2px solid transparent;transition:color .15s}
+  .bar .nav .tab:hover{color:var(--cy)}
+  .bar .nav .tab.a{color:var(--ink);border-bottom-color:var(--cy)}
+  .view[hidden]{display:none}
   .bar .stat{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px var(--mint);display:inline-block;margin-right:6px;animation:pulse 1.5s ease-in-out infinite}
   .bootstrip{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:#5fb9c7;padding:7px 18px;border-bottom:1px solid var(--line);position:relative;z-index:2;min-height:30px}
   .bootstrip #boottext{color:var(--cy)}
@@ -152,7 +156,7 @@
 
     <div class="bar">
       <div class="brand">&gt; <b>BIGGOLDENCOX</b> // COLLECTION VAULT</div>
-      <div class="nav"><a class="a" href="#vault">Vault</a><a href="#insights">Insights</a><a href="#hunting">Hunting</a><span><span class="stat"></span>Online</span></div>
+      <div class="nav"><button class="tab a" data-tab="vault">Vault</button><button class="tab" data-tab="intel">Intel</button><button class="tab" data-tab="hunting">Hunting</button><span><span class="stat"></span>Online</span></div>
     </div>
     <div class="bootstrip">&gt; <span id="boottext">SYSTEMS ONLINE · VAULT READY</span></div>
 
@@ -167,32 +171,37 @@
       <div class="hstats" id="hstats"></div>
     </div>
 
-    <div class="ctl" id="vault">
-      <div class="chiprow" id="filters"></div>
-      <div class="rightctl">
-        <select class="sortsel" id="sort">
-          <option value="value">Sort · Value</option>
-          <option value="year">Sort · Year</option>
-          <option value="gain">Sort · Gain %</option>
-          <option value="name">Sort · Name</option>
-        </select>
-        <div class="search"><b>▸</b><input id="search" type="search" placeholder="search game or console…" autocomplete="off"></div>
+    <div class="view" id="view-vault">
+      <div class="ctl">
+        <div class="chiprow" id="filters"></div>
+        <div class="rightctl">
+          <select class="sortsel" id="sort">
+            <option value="value">Sort · Value</option>
+            <option value="year">Sort · Year</option>
+            <option value="gain">Sort · Gain %</option>
+            <option value="name">Sort · Name</option>
+          </select>
+          <div class="search"><b>▸</b><input id="search" type="search" placeholder="search game or console…" autocomplete="off"></div>
+        </div>
+      </div>
+      <div class="seclabel" id="gridlabel">// Systems</div>
+      <div class="grid" id="grid"></div>
+      <div class="nores" id="nores" style="display:none">&gt; NO SYSTEMS MATCH QUERY_</div>
+    </div>
+
+    <div class="view" id="view-intel" hidden>
+      <div class="seclabel">// Intel</div>
+      <div class="ins">
+        <div class="panel"><p class="ph">Value by brand</p><div id="brands"></div></div>
+        <div class="panel"><p class="ph">Top gainers</p><div id="gainers"></div>
+          <p class="ph" style="margin:14px 0 10px">At a glance</p><div class="facts" id="facts"></div></div>
       </div>
     </div>
 
-    <div class="seclabel" id="gridlabel">// Systems</div>
-    <div class="grid" id="grid"></div>
-    <div class="nores" id="nores" style="display:none">&gt; NO SYSTEMS MATCH QUERY_</div>
-
-    <div class="seclabel" id="insights">// Intel</div>
-    <div class="ins">
-      <div class="panel"><p class="ph">Value by brand</p><div id="brands"></div></div>
-      <div class="panel"><p class="ph">Top gainers</p><div id="gainers"></div>
-        <p class="ph" style="margin:14px 0 10px">At a glance</p><div class="facts" id="facts"></div></div>
+    <div class="view" id="view-hunting" hidden>
+      <div class="seclabel">// Still hunting · <span id="huntcount"></span></div>
+      <div class="wish" id="wish"></div>
     </div>
-
-    <div class="seclabel" id="hunting">// Still hunting · <span id="huntcount"></span></div>
-    <div class="wish" id="wish"></div>
 
     <div class="foot">Gaming across all platforms <span>&hearts;</span> since 1996 · HUD preview</div>
   </div>
@@ -333,8 +342,12 @@
       '<div class="fact"><span class="k">Newest</span><span class="v">'+newest.name+' · '+RELEASE_YEAR[newest.name]+'</span></div>'+
       '<div class="fact"><span class="k">Years spanned</span><span class="v">'+(RELEASE_YEAR[newest.name]-RELEASE_YEAR[oldest.name])+' yrs</span></div>'+
       '<div class="fact"><span class="k">Avg game rating</span><span class="v">'+avg+'★</span></div>';
-    if(!rm) document.querySelectorAll('.btrack span').forEach(function(sp){ var w=sp.dataset.w; requestAnimationFrame(function(){requestAnimationFrame(function(){sp.style.width=w;});}); });
-    else document.querySelectorAll('.btrack span').forEach(function(sp){sp.style.width=sp.dataset.w;});
+  }
+  function animateBars(){
+    document.querySelectorAll('#view-intel .btrack span').forEach(function(sp){
+      if(rm){ sp.style.width=sp.dataset.w; return; }
+      sp.style.width='0'; requestAnimationFrame(function(){requestAnimationFrame(function(){sp.style.width=sp.dataset.w;});});
+    });
   }
 
   function renderWishlist(){
@@ -348,6 +361,13 @@
 
   document.getElementById("sort").addEventListener("change",function(e){ sortMode=e.target.value; renderGrid(); });
   document.getElementById("search").addEventListener("input",function(e){ searchQuery=e.target.value; renderGrid(); });
+
+  function showTab(name){
+    document.querySelectorAll('.view').forEach(function(v){ v.hidden = (v.id !== 'view-'+name); });
+    document.querySelectorAll('.nav .tab').forEach(function(t){ t.classList.toggle('a', t.dataset.tab===name); });
+    if(name==='intel') animateBars();
+  }
+  document.querySelectorAll('.nav .tab').forEach(function(t){ t.addEventListener('click',function(){ showTab(t.dataset.tab); }); });
 
   function boot(){
     var bt=document.getElementById("boottext");

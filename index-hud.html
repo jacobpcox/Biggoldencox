@@ -289,6 +289,7 @@
     var paid=CONSOLES.reduce(function(a,c){return a+paidOf(c);},0);
     var val=CONSOLES.reduce(function(a,c){return a+curOf(c);},0);
     var pct = paid>0 ? (val-paid)/paid*100 : 0;
+    var years=(new Date().getFullYear())-1996;
     // filters
     document.getElementById("filters").innerHTML =
       '<span class="fchip on" data-f="all">All <b>'+total+'</b></span>'+
@@ -304,7 +305,7 @@
       '<div><div class="n cy" data-c="'+total+'">0</div><div class="l">Systems</div></div>'+
       '<div><div class="n" data-c="'+games+'">0</div><div class="l">Games</div></div>'+
       '<div><div class="n am" data-c="'+units+'">0</div><div class="l">Units owned</div></div>'+
-      '<div><div class="n">1996</div><div class="l">Collecting since</div></div>';
+      '<div><div class="n cy" data-c="'+years+'">0</div><div class="l">Years as biggoldencox</div></div>';
     // hero value + gain + meter
     var hv=document.getElementById("hval"); hv.dataset.target=Math.round(val);
     var hg=document.getElementById("hgain");

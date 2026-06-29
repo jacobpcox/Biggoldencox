@@ -136,7 +136,10 @@ async function steamAppId(term) {
 }
 
 (async () => {
-  const manifest = { generated: new Date().toISOString(), games: {} };
+  // Merge into the existing manifest so covers from other sources (e.g. SteamGridDB) aren't lost.
+  let manifest = { games: {} };
+  try { manifest = JSON.parse(fs.readFileSync(path.join(ROOT, "images.json"), "utf8")); manifest.games = manifest.games || {}; } catch { /* none yet */ }
+  manifest.generated = new Date().toISOString();
   let got = 0, missed = 0;
 
   // ---- Libretro console games ----

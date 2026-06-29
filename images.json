@@ -36,7 +36,8 @@
     },
     "atari-jaguar": {
       "Alien vs Predator": "images/games/atari-jaguar/alien-vs-predator.png",
-      "Iron Soldier": "images/games/atari-jaguar/iron-soldier.png"
+      "Iron Soldier": "images/games/atari-jaguar/iron-soldier.png",
+      "Wolfenstein 3D": "images/games/atari-jaguar/wolfenstein-3d.png"
     },
     "nes": {
       "Zelda II: The Adventure of Link": "images/games/nes/zelda-ii-the-adventure-of-link.png",
@@ -55,7 +56,8 @@
       "The Legend of Zelda: A Link to the Past": "images/games/super-nintendo/the-legend-of-zelda-a-link-to-the-past.png",
       "Super Mario World": "images/games/super-nintendo/super-mario-world.png",
       "Super Game Boy": "images/games/super-nintendo/super-game-boy.png",
-      "Attack of the PETSCII Robots": "images/games/super-nintendo/attack-of-the-petscii-robots.png"
+      "Attack of the PETSCII Robots": "images/games/super-nintendo/attack-of-the-petscii-robots.png",
+      "Final Fight": "images/games/super-nintendo/final-fight.png"
     },
     "n64": {
       "The Legend of Zelda: Ocarina of Time": "images/games/n64/the-legend-of-zelda-ocarina-of-time.png",
@@ -126,7 +128,8 @@
     },
     "genesis": {
       "Contra: Hard Corps": "images/games/genesis/contra-hard-corps.png",
-      "Mortal Kombat": "images/games/genesis/mortal-kombat.png"
+      "Mortal Kombat": "images/games/genesis/mortal-kombat.png",
+      "Sonic Spinball": "images/games/genesis/sonic-spinball.png"
     },
     "sega-saturn": {
       "Blazing Heroes": "images/games/sega-saturn/blazing-heroes.png"

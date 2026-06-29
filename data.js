@@ -242,11 +242,13 @@ const GAMES = {
         { title: "Super Game Boy", price: 30 },
         { title: "The Legend of Zelda: A Link to the Past", price: 40 },
         { title: "Super Mario World", price: 40 },
-        { title: "Attack of the PETSCII Robots", price: 40 }
+        { title: "Attack of the PETSCII Robots", price: 40 },
+        { title: "Final Fight", price: 15 }
     ],
     "atari-jaguar": [
         { title: "Alien vs Predator", price: 30 },
-        { title: "Iron Soldier", price: 30 }
+        { title: "Iron Soldier", price: 30 },
+        { title: "Wolfenstein 3D" }
     ],
     "sega-saturn": [
         { title: "Blazing Heroes", price: 35 }
@@ -317,7 +319,8 @@ const GAMES = {
     ],
     "genesis": [
         { title: "Contra: Hard Corps", price: 0 },
-        { title: "Mortal Kombat", price: 0 }
+        { title: "Mortal Kombat", price: 0 },
+        { title: "Sonic Spinball", price: 8 }
     ],
     "xbox-360": [
         { title: "Toy Story 3", price: 0 },
@@ -538,9 +541,9 @@ const PLAYERS = {
     },
     "super-nintendo": {
         "Mega Man X": "1", "Super Game Boy": "1", "The Legend of Zelda: A Link to the Past": "1",
-        "Super Mario World": "1-2", "Attack of the PETSCII Robots": "1"
+        "Super Mario World": "1-2", "Attack of the PETSCII Robots": "1", "Final Fight": "1"
     },
-    "genesis": { "Contra: Hard Corps": "1-2", "Mortal Kombat": "1-2" },
+    "genesis": { "Contra: Hard Corps": "1-2", "Mortal Kombat": "1-2", "Sonic Spinball": "1-4" },
     "n64": {
         "The Legend of Zelda: Ocarina of Time": "1", "Super Mario 64": "1", "Paperboy": "1",
         "WWF WrestleMania 2000": "1-4", "Mortal Kombat Mythologies: Sub-Zero": "1", "Tarzan": "1",
@@ -550,7 +553,7 @@ const PLAYERS = {
         "Star Wars Episode I: Racer": "1-2", "Superman 64": "1", "Mario Kart 64": "1-4",
         "Super Smash Bros.": "1-4", "Wave Race 64": "1-2", "Dark Rift": "1-2", "San Francisco Rush 2049": "1-4"
     },
-    "atari-jaguar": { "Alien vs Predator": "1", "Iron Soldier": "1" },
+    "atari-jaguar": { "Alien vs Predator": "1", "Iron Soldier": "1", "Wolfenstein 3D": "1" },
     "sega-saturn": { "Blazing Heroes": "1" },
     "playstation-1": { "Iron Man and X-O Manowar in Heavy Metal": "1-2" },
     "playstation-2": {

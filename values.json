@@ -282,7 +282,7 @@
       "Transfer Pak": 15
     },
     "atari-jaguar": {
-      "Controller": 44
+      "Controller": 60
     },
     "genesis": {
       "Controller": 56
@@ -309,10 +309,10 @@
       "Kinect": 30
     },
     "omega-entertainment-machine": {
-      "Neo Geo MVS Controller": 100
+      "Neo Geo MVS Controller": 200
     },
     "game-boy-color": {
-      "Game Boy Printer": 30
+      "Game Boy Printer": 50
     }
   }
 }

@@ -117,7 +117,8 @@
   .reticle::before{width:20px;height:2px;transform:translate(-50%,-50%)}
   .reticle::after{width:2px;height:20px;transform:translate(-50%,-50%)}
   .enter{position:absolute;bottom:8px;right:10px;font-size:9px;letter-spacing:.14em;color:var(--cy);opacity:0;transform:translateY(4px);transition:.2s;z-index:2;text-shadow:0 0 8px rgba(39,211,238,.5)}
-  .card:hover .reticle{opacity:.85}.card:hover .enter{opacity:1;transform:none}
+  .card:hover .reticle{opacity:.85;animation:reticleblink .7s steps(1) infinite}.card:hover .enter{opacity:1;transform:none}
+  @keyframes reticleblink{0%,55%{opacity:.85}56%,100%{opacity:0}}
   .nores{padding:30px 18px;color:var(--dim);position:relative;z-index:2}
 
   .ins{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;padding:8px 18px 20px;position:relative;z-index:2}
@@ -144,6 +145,7 @@
   @media (prefers-reduced-motion:reduce){
     .hud,.scan,.pwron,.blink,.bar .stat,.bigmeter i.on:last-of-type{animation:none}
     .pwron{display:none}.card:hover::after{animation:none;opacity:0}.btrack span{transition:none}
+    .card:hover .reticle{animation:none}
   }
 </style>
 </head>

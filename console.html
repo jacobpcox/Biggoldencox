@@ -197,12 +197,14 @@
         .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
         .card-name { font-family: 'Orbitron', monospace; font-size: 17px; font-weight: 700; line-height: 1.2; margin-bottom: 8px; }
         .game-players { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 12px; letter-spacing: 0.3px; }
-        .manual-badge {
-            position: absolute; top: 12px; left: 12px; z-index: 1;
+        .manual-badge, .cib-badge {
+            position: absolute; top: 12px; z-index: 1;
             background: rgba(0, 0, 0, 0.6); color: #fff;
             font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
             padding: 5px 10px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.2);
         }
+        .manual-badge { left: 12px; }
+        .cib-badge { right: 12px; color: var(--gold-accent); border-color: rgba(255, 215, 0, 0.4); }
         .game-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; }
 
         .stars { position: relative; display: inline-block; font-size: 20px; line-height: 1; letter-spacing: 2px; white-space: nowrap; }
@@ -317,10 +319,13 @@
                 : placeholder;
             const hasManual = g.manual || (typeof MANUALS !== "undefined" && (MANUALS[slug] === true || (Array.isArray(MANUALS[slug]) && MANUALS[slug].includes(g.title))));
             const manualBadge = hasManual ? `<div class="manual-badge" title="Includes manual">📖 Manual</div>` : "";
+            const isCIB = g.cib || (typeof CIB !== "undefined" && (CIB[slug] === true || (Array.isArray(CIB[slug]) && CIB[slug].includes(g.title))));
+            const cibBadge = isCIB ? `<div class="cib-badge" title="Complete in box">📦 CIB</div>` : "";
             return `
                 <div class="card" style="--accent:${accent};">
                     <div class="card-image" data-placeholder="${placeholder.replace(/"/g, '&quot;')}">
                         ${manualBadge}
+                        ${cibBadge}
                         ${img}
                     </div>
                     <div class="card-body">

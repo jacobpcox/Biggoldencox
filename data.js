@@ -713,7 +713,15 @@ const GAME_WISHLIST = {};
 // MANUALS["<slug>"] = ["Title", ...]  -> only those titles. (Or set manual:true on a game.)
 const MANUALS = { "atari-2600": true };
 
+// ===== Complete-in-box games (shows a 📦 CIB badge on the game card) =====
+// CIB["<slug>"] = true  -> every game on that console is CIB
+// CIB["<slug>"] = ["Title", ...]  -> only those titles. (Or set cib:true on a game.)
+const CIB = {
+    "atari-2600": ["Dig Dug"],
+    "n64": ["GoldenEye 007"]
+};
+
 // Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, MANUALS, PLAYERS, consoleSlug, findConsole };
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, MANUALS, CIB, PLAYERS, consoleSlug, findConsole };
 }

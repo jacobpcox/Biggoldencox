@@ -1,6 +1,6 @@
 // biggoldencox service worker — offline shell + runtime caching.
 // Bump CACHE when the shell changes to force an update.
-const CACHE = "bgcox-v5";
+const CACHE = "bgcox-v6";
 const CORE = [
   "./",
   "index.html",
@@ -36,12 +36,12 @@ self.addEventListener("fetch", function (e) {
   var fresh = req.mode === "navigate" || /\.(json|js)$/.test(url.pathname);
   if (fresh) {
     e.respondWith(
-      fetch(req).then(function (res) {
+      fetch(req, { cache: "no-store" }).then(function (res) {
         var copy = res.clone();
         caches.open(CACHE).then(function (c) { c.put(req, copy); });
         return res;
       }).catch(function () {
-        return caches.match(req).then(function (m) { return m || caches.match("index-hud.html"); });
+        return caches.match(req).then(function (m) { return m || caches.match("index.html"); });
       })
     );
     return;

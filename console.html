@@ -390,7 +390,9 @@
                     const ex = V.accessories && V.accessories[slug] && V.accessories[slug][a.name];
                     return s + (typeof ex === "number" ? ex : (typeof a.price === "number" ? a.price : 0));
                 }, 0);
-                if (cv || gv || av) valuePill = `<div class="stat-pill"><div class="num">${money(cv + gv + av)}</div><div class="lbl">Current Value</div></div>`;
+                const mvRate = (typeof MANUAL_VALUE !== "undefined" && MANUAL_VALUE[slug]) || 0;
+                const mv = mvRate ? games.reduce((s, g) => s + ((g.manual || (typeof MANUALS !== "undefined" && (MANUALS[slug] === true || (Array.isArray(MANUALS[slug]) && MANUALS[slug].includes(g.title))))) ? mvRate : 0), 0) : 0;
+                if (cv || gv || av || mv) valuePill = `<div class="stat-pill"><div class="num">${money(cv + gv + av + mv)}</div><div class="lbl">Current Value</div></div>`;
             }
 
             let statsBlock = "";

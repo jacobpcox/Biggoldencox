@@ -712,6 +712,8 @@ const GAME_WISHLIST = {};
 // MANUALS["<slug>"] = true  -> every game on that console has its manual
 // MANUALS["<slug>"] = ["Title", ...]  -> only those titles. (Or set manual:true on a game.)
 const MANUALS = { "atari-2600": true };
+// Current value added per manual (📖) on that console — folds into Current Value, not invested.
+const MANUAL_VALUE = { "atari-2600": 5 };
 
 // ===== Complete-in-box games (shows a 📦 CIB badge on the game card) =====
 // CIB["<slug>"] = true  -> every game on that console is CIB
@@ -723,5 +725,5 @@ const CIB = {
 
 // Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, MANUALS, CIB, PLAYERS, consoleSlug, findConsole };
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, MANUALS, MANUAL_VALUE, CIB, PLAYERS, consoleSlug, findConsole };
 }

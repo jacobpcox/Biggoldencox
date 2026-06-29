@@ -1227,6 +1227,12 @@
                 const ex = V.accessories && V.accessories[s] && V.accessories[s][a.name];
                 v += (typeof ex === "number" ? ex : (typeof a.price === "number" ? a.price : 0));
             });
+            // manual (📖) value
+            const mv = (typeof MANUAL_VALUE !== "undefined" && MANUAL_VALUE[s]) || 0;
+            if (mv) (GAMES[s] || []).forEach(g => {
+                const hm = g.manual || (typeof MANUALS !== "undefined" && (MANUALS[s] === true || (Array.isArray(MANUALS[s]) && MANUALS[s].includes(g.title))));
+                if (hm) v += mv;
+            });
             return v;
         }
 

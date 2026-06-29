@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-04",
+  "generated": "2026-06-12",
   "currency": "USD",
   "grade": "loose",
   "source": "PriceCharting (loose/used prices, NTSC)",
@@ -80,11 +80,13 @@
       "Super Game Boy": 29.05,
       "The Legend of Zelda: A Link to the Past": 38.99,
       "Super Mario World": 18.92,
-      "Attack of the PETSCII Robots": 60
+      "Attack of the PETSCII Robots": 60,
+      "Final Fight": 28
     },
     "genesis": {
       "Contra: Hard Corps": 64.99,
-      "Mortal Kombat": 13.13
+      "Mortal Kombat": 13.13,
+      "Sonic Spinball": 10
     },
     "n64": {
       "The Legend of Zelda: Ocarina of Time": 44.99,
@@ -113,7 +115,8 @@
     },
     "atari-jaguar": {
       "Alien vs Predator": 65,
-      "Iron Soldier": 28.99
+      "Iron Soldier": 28.99,
+      "Wolfenstein 3D": 54.44
     },
     "sega-saturn": {
       "Blazing Heroes": 35.55
@@ -251,7 +254,8 @@
       "Tetris Blast": 9.23,
       "Tony Hawk's Pro Skater": 8,
       "Rugrats in Paris": 6.78,
-      "Who Wants to Be a Millionaire": 4.99
+      "Who Wants to Be a Millionaire": 4.99,
+      "Pokémon Gold": 79.22
     },
     "nintendo-ds": {
       "The Legend of Zelda: Phantom Hourglass": 25.1,
@@ -260,6 +264,9 @@
     },
     "omega-entertainment-machine": {
       "The King of Fighters 2000": 305.61
+    },
+    "game-boy-advance": {
+      "Pokémon FireRed": 100
     }
   }
 }

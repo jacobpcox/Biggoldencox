@@ -687,9 +687,9 @@ const BRAND_COLOR = {
 // price = what you paid (counts toward Total Invested). Optional: qty, img.
 // Current value uses values.json -> accessories[slug][name] if present, otherwise the price paid.
 const ACCESSORIES = {
-    "atari-2600": [ { name: "Joystick", qty: 3 } ],
+    "atari-2600": [ { name: "Joystick", qty: 3, price: 10 } ],
     "super-nintendo": [ { name: "Controller", qty: 2, price: 30 } ],
-    "n64": [ { name: "Controller", qty: 4, price: 50 }, { name: "Rumble Pak", qty: 1 }, { name: "Transfer Pak", qty: 1 } ],
+    "n64": [ { name: "Controller", qty: 4, price: 50 }, { name: "Rumble Pak", qty: 1, price: 0 }, { name: "Transfer Pak", qty: 1, price: 0 } ],
     "atari-jaguar": [ { name: "Controller", qty: 2, price: 50 } ],
     "genesis": [ { name: "Controller", qty: 4, price: 30 } ],
     "gamecube": [ { name: "Controller", qty: 4, price: 0 }, { name: "DK Bongos", qty: 1, price: 0 } ],
@@ -697,7 +697,7 @@ const ACCESSORIES = {
     "playstation-2": [ { name: "Controller", qty: 2, price: 0 } ],
     "xbox": [ { name: "Controller", qty: 3, price: 0 } ],
     "xbox-360": [ { name: "Controller", qty: 4, price: 0 }, { name: "Kinect", qty: 1, price: 0 } ],
-    "xbox-one": [ { name: "Controller", qty: 5, price: 200 }, { name: "Kinect", qty: 1 } ],
+    "xbox-one": [ { name: "Controller", qty: 5, price: 200 }, { name: "Kinect", qty: 1, price: 0 } ],
     "omega-entertainment-machine": [ { name: "Neo Geo MVS Controller", qty: 2, price: 100 } ],
     "game-boy-color": [ { name: "Game Boy Printer", qty: 1, price: 50 } ]
 };

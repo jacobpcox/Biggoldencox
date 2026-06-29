@@ -268,5 +268,51 @@
     "game-boy-advance": {
       "Pokémon FireRed": 100
     }
+  },
+  "accessories": {
+    "atari-2600": {
+      "Joystick": 36
+    },
+    "super-nintendo": {
+      "Controller": 44
+    },
+    "n64": {
+      "Controller": 88,
+      "Rumble Pak": 10,
+      "Transfer Pak": 15
+    },
+    "atari-jaguar": {
+      "Controller": 44
+    },
+    "genesis": {
+      "Controller": 56
+    },
+    "gamecube": {
+      "Controller": 128,
+      "DK Bongos": 25
+    },
+    "playstation-1": {
+      "Controller": 16
+    },
+    "playstation-2": {
+      "Controller": 28
+    },
+    "xbox": {
+      "Controller": 48
+    },
+    "xbox-360": {
+      "Controller": 72,
+      "Kinect": 15
+    },
+    "xbox-one": {
+      "Controller": 175,
+      "Kinect": 30
+    },
+    "omega-entertainment-machine": {
+      "Neo Geo MVS Controller": 100
+    },
+    "game-boy-color": {
+      "Game Boy Printer": 30
+    }
   }
 }

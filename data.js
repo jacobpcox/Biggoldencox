@@ -688,7 +688,7 @@ const BRAND_COLOR = {
 // price = what you paid (counts toward Total Invested). Optional: qty, img.
 // Current value uses values.json -> accessories[slug][name] if present, otherwise the price paid.
 const ACCESSORIES = {
-    "atari-2600": [ { name: "Joystick", qty: 3, price: 10 }, { name: "Keyboard Controller", qty: 2, price: 0 }, { name: "Instruction Booklets (all games)", price: 0 } ],
+    "atari-2600": [ { name: "Joystick", qty: 3, price: 10 }, { name: "Keyboard Controller", qty: 2, price: 0 } ],
     "nes": [ { name: "Controller", qty: 3, price: 30 }, { name: "Power Pad", qty: 1, price: 0 } ],
     "super-nintendo": [ { name: "Controller", qty: 2, price: 30 } ],
     "n64": [ { name: "Controller", qty: 4, price: 50 }, { name: "Rumble Pak", qty: 1, price: 0 }, { name: "Transfer Pak", qty: 1, price: 0 }, { name: "Super Smash Bros. Manual", price: 10 }, { name: "Mario Golf Manual", price: 10 }, { name: "GoldenEye 007 Strategy Guide", price: 20 } ],
@@ -708,7 +708,12 @@ const ACCESSORIES = {
 // GAME_WISHLIST["<slug>"] = [ "Game Title", "Another Game", ... ]
 const GAME_WISHLIST = {};
 
+// ===== Games that include their manual (shows a 📖 badge on the game card) =====
+// MANUALS["<slug>"] = true  -> every game on that console has its manual
+// MANUALS["<slug>"] = ["Title", ...]  -> only those titles. (Or set manual:true on a game.)
+const MANUALS = { "atari-2600": true };
+
 // Allow Node tooling (scripts/*.js) to import this data. Harmless in the browser.
 if (typeof module !== "undefined" && module.exports) {
-    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, PLAYERS, consoleSlug, findConsole };
+    module.exports = { CONSOLES, RELEASE_YEAR, GAMES, WISHLIST, BRAND, BRAND_COLOR, ACCESSORIES, GAME_WISHLIST, MANUALS, PLAYERS, consoleSlug, findConsole };
 }

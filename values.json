@@ -273,8 +273,7 @@
   "accessories": {
     "atari-2600": {
       "Joystick": 36,
-      "Keyboard Controller": 30,
-      "Instruction Booklets (all games)": 25
+      "Keyboard Controller": 30
     },
     "super-nintendo": {
       "Controller": 44

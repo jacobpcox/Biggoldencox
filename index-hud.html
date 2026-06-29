@@ -57,7 +57,8 @@
   .bootstrip{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:#5fb9c7;padding:7px 18px;border-bottom:1px solid var(--line);position:relative;z-index:2;min-height:30px}
   .bootstrip #boottext{color:var(--cy)}
 
-  .hero{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;padding:20px 18px;border-bottom:1px solid var(--line);position:relative;z-index:2}
+  .top{border-bottom:1px solid var(--line);position:relative;z-index:2}
+  .hero{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;padding:20px 18px 12px;position:relative;z-index:2}
   @media(max-width:680px){.hero{grid-template-columns:1fr}}
   .hcap{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--cy-dim);margin-bottom:6px}
   .hval{font-family:"Bahnschrift","Arial Narrow",sans-serif;font-size:56px;line-height:.9;font-weight:700;color:#eafcff;font-variant-numeric:tabular-nums;text-shadow:0 0 26px rgba(39,211,238,.25)}
@@ -73,7 +74,7 @@
   .hstats .n.cy{color:var(--cy)}.hstats .n.am{color:var(--amber)}
   .hstats .l{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:3px}
 
-  .legacy{padding:18px;border-bottom:1px solid var(--line);position:relative;z-index:2;text-align:center}
+  .legacy{padding:4px 18px 18px;position:relative;z-index:2;text-align:center}
   .lcap{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--cy-dim);margin-bottom:13px}
   .clock{display:flex;align-items:flex-start;justify-content:center;gap:6px;flex-wrap:wrap}
   .clock .u{min-width:60px}
@@ -176,6 +177,7 @@
     </div>
     <div class="bootstrip">&gt; <span id="boottext">SYSTEMS ONLINE · VAULT READY</span></div>
 
+    <div class="top">
     <div class="hero">
       <div>
         <div class="hcap">Collection value · <span class="blink" style="color:var(--mint)">● LIVE</span></div>
@@ -198,6 +200,7 @@
         <div class="u"><div class="cv sec" id="L_seconds">00</div><div class="cl">Seconds</div></div>
       </div>
       <div class="ltot">Total <b id="L_totalDays">0</b> days · <b id="L_totalHours">0</b> hrs · <b id="L_totalMinutes">0</b> min · <b id="L_totalSeconds">0</b> sec elapsed</div>
+    </div>
     </div>
 
     <div class="view" id="view-vault">

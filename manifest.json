@@ -2,7 +2,7 @@
   "name": "biggoldencox — Collection Vault",
   "short_name": "biggoldencox",
   "description": "A lifetime gaming collection: consoles, handhelds & games with live market value.",
-  "start_url": "index-hud.html",
+  "start_url": "./",
   "scope": "/",
   "display": "standalone",
   "background_color": "#06090d",

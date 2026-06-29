@@ -6,6 +6,12 @@
 <title>biggoldencox | Mission HUD (preview)</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#06090d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="biggoldencox">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
   :root{
     --bg:#06090d;--panel:#0b1117;--panel2:#0a0f14;--line:#13303a;
@@ -567,6 +573,11 @@
     .then(function(){ return fetch("images.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():null;}).catch(function(){return null;}); })
     .then(function(im){ window.IMAGES=im; })
     .finally(function(){ renderStats(); renderGrid(); renderInsights(); renderWishlist(); boot(); });
+</script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+  }
 </script>
 </body>
 </html>

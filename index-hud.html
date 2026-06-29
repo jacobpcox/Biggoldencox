@@ -136,17 +136,22 @@
   @keyframes hudblink{0%,100%{opacity:1}50%{opacity:.12}}
   .nores{padding:30px 18px;color:var(--dim);position:relative;z-index:2}
 
-  .ins{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;padding:8px 18px 20px;position:relative;z-index:2}
-  @media(max-width:680px){.ins{grid-template-columns:1fr}}
-  .panel{border:1px solid var(--line);background:var(--panel2);padding:14px}
+  .ins{column-count:2;column-gap:14px;padding:8px 18px 20px;position:relative;z-index:2}
+  @media(max-width:680px){.ins{column-count:1}}
+  .panel{border:1px solid var(--line);background:var(--panel2);padding:14px;break-inside:avoid;margin-bottom:14px}
   .ph{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cy-dim);margin:0 0 12px}
   .brow{margin-bottom:10px}
   .brow .bl{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:4px}
   .brow .bl .v{color:var(--cy);font-variant-numeric:tabular-nums}
   .btrack{height:7px;background:#0e2026;border:1px solid #14323b}
   .btrack span{display:block;height:100%;width:0;background:linear-gradient(90deg,#1aa7bd,#27d3ee);box-shadow:0 0 8px rgba(39,211,238,.4);transition:width 1s cubic-bezier(.2,.8,.2,1)}
-  .grank{display:flex;justify-content:space-between;font-size:11.5px;padding:6px 0;border-bottom:1px dashed #14262e}.grank:last-child{border-bottom:0}.grank .up{color:var(--mint)}.grank .down{color:var(--coral)}
-  .facts{display:flex;flex-direction:column;gap:9px}.fact{display:flex;justify-content:space-between;font-size:12px}.fact .k{color:var(--dim)}.fact .v{color:var(--cy)}
+  .grank{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:6px 0;border-bottom:1px dashed #14262e}.grank:last-child{border-bottom:0}.grank .up{color:var(--mint)}.grank .down{color:var(--coral)}
+  .grank .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .grank em{font-style:normal;color:var(--dim);font-size:10px;letter-spacing:.03em}
+  .grank .v{color:var(--cy);font-variant-numeric:tabular-nums;white-space:nowrap}.grank .d{color:var(--mint);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .facts{display:flex;flex-direction:column;gap:9px}.fact{display:flex;justify-content:space-between;gap:12px;font-size:12px}.fact .k{color:var(--dim)}.fact .v{color:var(--cy);text-align:right}
+  .panel.wide{column-span:all}
+  .factsgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px 26px}
 
   .wish{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:8px 18px 20px;position:relative;z-index:2}
   @media(max-width:680px){.wish{grid-template-columns:1fr 1fr}}
@@ -224,8 +229,12 @@
       <div class="seclabel">// Intel</div>
       <div class="ins">
         <div class="panel"><p class="ph">Value by brand</p><div id="brands"></div></div>
-        <div class="panel"><p class="ph">Top gainers</p><div id="gainers"></div>
-          <p class="ph" style="margin:14px 0 10px">At a glance</p><div class="facts" id="facts"></div></div>
+        <div class="panel"><p class="ph">Where the money went</p><div id="spend"></div></div>
+        <div class="panel"><p class="ph">Most valuable systems</p><div id="topsystems"></div></div>
+        <div class="panel"><p class="ph">Most valuable games</p><div id="topgames"></div></div>
+        <div class="panel"><p class="ph">Top gainers · %</p><div id="gainers"></div></div>
+        <div class="panel"><p class="ph">Biggest $ gains</p><div id="dollargains"></div></div>
+        <div class="panel wide"><p class="ph">At a glance</p><div class="facts factsgrid" id="facts"></div></div>
       </div>
     </div>
 
@@ -354,25 +363,78 @@
   }
   function countUp(el,target,pre){ var dur=950,st=performance.now(); (function tick(now){var p=Math.min(1,(now-st)/dur);var e=0.5-Math.cos(p*Math.PI)/2;el.textContent=pre+Math.round(target*e).toLocaleString();if(p<1)requestAnimationFrame(tick);})(performance.now()); }
 
+  function shortName(c){ return c.name.split(" / ")[0]; }
+  function barRow(label,val,w){ return '<div class="brow"><div class="bl"><span>'+label+'</span><span class="v">'+money(val)+'</span></div><div class="btrack"><span data-w="'+w.toFixed(1)+'%"></span></div></div>'; }
   function renderInsights(){
     var V=window.VALUES; if(!V)return;
+    var allG=Object.values(GAMES).flat();
+    var slugName={}; CONSOLES.forEach(function(c){ slugName[consoleSlug(c)]=shortName(c); });
+
+    // value by brand
     var brands={}; CONSOLES.forEach(function(c){var b=BRAND[consoleSlug(c)]||"Other";brands[b]=(brands[b]||0)+curOf(c);});
-    var arr=Object.entries(brands).sort(function(a,b){return b[1]-a[1];}); var max=arr.length?arr[0][1]:1;
-    document.getElementById("brands").innerHTML=arr.map(function(e){
-      return '<div class="brow"><div class="bl"><span>'+e[0]+'</span><span class="v">'+money(e[1])+'</span></div><div class="btrack"><span data-w="'+(e[1]/max*100).toFixed(1)+'%"></span></div></div>';
-    }).join("");
-    var gain=CONSOLES.map(function(c){return {n:c.name,p:gainPct(c)};}).filter(function(x){return x.p!==null;}).sort(function(a,b){return b.p-a.p;}).slice(0,5);
-    document.getElementById("gainers").innerHTML=gain.map(function(g){return '<div class="grank"><span>'+g.n+'</span><span class="'+(g.p>=0?'up':'down')+'">'+(g.p>=0?'▲ ':'▼ ')+Math.abs(g.p).toFixed(0)+'%</span></div>';}).join("");
+    var arr=Object.entries(brands).sort(function(a,b){return b[1]-a[1];}); var bmax=arr.length?arr[0][1]:1;
+    document.getElementById("brands").innerHTML=arr.map(function(e){ return barRow(e[0],e[1],e[1]/bmax*100); }).join("");
+
+    // where the money went (invested split)
+    var consoleSpend=CONSOLES.reduce(function(a,c){return a+(c.price||0);},0);
+    var gameSpend=allG.reduce(function(a,g){return a+(typeof g.price==="number"?g.price:0);},0);
+    var accSpend=Object.values(ACCESSORIES||{}).reduce(function(a,arr2){return a+arr2.reduce(function(s,x){return s+(typeof x.price==="number"?x.price:0);},0);},0);
+    var totalSpend=consoleSpend+gameSpend+accSpend||1;
+    document.getElementById("spend").innerHTML=
+      barRow("Consoles",consoleSpend,consoleSpend/totalSpend*100)+
+      barRow("Games",gameSpend,gameSpend/totalSpend*100)+
+      barRow("Accessories",accSpend,accSpend/totalSpend*100);
+
+    // most valuable systems
+    var sys=CONSOLES.map(function(c){return {n:shortName(c),v:curOf(c)};}).sort(function(a,b){return b.v-a.v;}).slice(0,6);
+    var smax=sys.length?sys[0].v:1;
+    document.getElementById("topsystems").innerHTML=sys.map(function(s){ return barRow(s.n,s.v,s.v/smax*100); }).join("");
+
+    // most valuable games
+    var gv=[];
+    if(V.games) Object.keys(V.games).forEach(function(s){ Object.keys(V.games[s]).forEach(function(t){ gv.push({t:t,s:s,v:V.games[s][t]}); }); });
+    gv.sort(function(a,b){return b.v-a.v;});
+    document.getElementById("topgames").innerHTML=gv.slice(0,8).map(function(g){
+      return '<div class="grank"><span class="nm">'+g.t+' <em>'+(slugName[g.s]||"")+'</em></span><span class="v">'+money(g.v)+'</span></div>';
+    }).join("") || '<div class="grank"><span class="nm">—</span></div>';
+
+    // top gainers %
+    var gain=CONSOLES.map(function(c){return {n:shortName(c),p:gainPct(c)};}).filter(function(x){return x.p!==null;}).sort(function(a,b){return b.p-a.p;}).slice(0,6);
+    document.getElementById("gainers").innerHTML=gain.map(function(g){return '<div class="grank"><span class="nm">'+g.n+'</span><span class="'+(g.p>=0?'up':'down')+'">'+(g.p>=0?'▲ ':'▼ ')+Math.abs(g.p).toFixed(0)+'%</span></div>';}).join("");
+
+    // biggest $ gains
+    var dg=CONSOLES.map(function(c){return {n:shortName(c),d:curOf(c)-paidOf(c)};}).sort(function(a,b){return b.d-a.d;}).slice(0,6);
+    document.getElementById("dollargains").innerHTML=dg.map(function(g){return '<div class="grank"><span class="nm">'+g.n+'</span><span class="'+(g.d>=0?'d':'down')+'">'+(g.d>=0?'+':'−')+money(Math.abs(g.d))+'</span></div>';}).join("");
+
+    // at a glance
     var wy=CONSOLES.filter(function(c){return RELEASE_YEAR[c.name];});
     var oldest=wy.reduce(function(a,c){return RELEASE_YEAR[c.name]<RELEASE_YEAR[a.name]?c:a;});
     var newest=wy.reduce(function(a,c){return RELEASE_YEAR[c.name]>RELEASE_YEAR[a.name]?c:a;});
-    var rated=Object.values(GAMES).flat().filter(function(g){return typeof g.rating==="number";});
+    var rated=allG.filter(function(g){return typeof g.rating==="number";});
     var avg=rated.length?(rated.reduce(function(a,g){return a+g.rating;},0)/rated.length).toFixed(1):"—";
+    var most=CONSOLES.map(function(c){return {n:shortName(c),g:gamesOf(consoleSlug(c)).length};}).sort(function(a,b){return b.g-a.g;})[0];
+    var fiveStar=allG.filter(function(g){return g.rating===5;}).length;
+    var cibCount=0,manCount=0,mpCount=0;
+    CONSOLES.forEach(function(c){var s=consoleSlug(c);gamesOf(s).forEach(function(g){
+      if(isCIB(s,g))cibCount++; if(hasManual(s,g))manCount++;
+      var p=g.players||(typeof PLAYERS!=="undefined"&&PLAYERS[s]&&PLAYERS[s][g.title]);
+      if(p&&String(p)!=="1")mpCount++;
+    });});
+    var accCount=Object.values(ACCESSORIES||{}).reduce(function(a,arr2){return a+arr2.reduce(function(s,x){return s+(x.qty||1);},0);},0);
+    var fact=function(k,v){return '<div class="fact"><span class="k">'+k+'</span><span class="v">'+v+'</span></div>';};
     document.getElementById("facts").innerHTML=
-      '<div class="fact"><span class="k">Oldest</span><span class="v">'+oldest.name.split(" / ")[0]+' · '+RELEASE_YEAR[oldest.name]+'</span></div>'+
-      '<div class="fact"><span class="k">Newest</span><span class="v">'+newest.name+' · '+RELEASE_YEAR[newest.name]+'</span></div>'+
-      '<div class="fact"><span class="k">Years spanned</span><span class="v">'+(RELEASE_YEAR[newest.name]-RELEASE_YEAR[oldest.name])+' yrs</span></div>'+
-      '<div class="fact"><span class="k">Avg game rating</span><span class="v">'+avg+'★</span></div>';
+      fact("Total games",allG.length)+
+      fact("Biggest library",most.n+" · "+most.g)+
+      fact("Avg game rating",avg+"★")+
+      fact("5★ games",fiveStar)+
+      fact("Couch multiplayer",mpCount+" games")+
+      fact("Complete in box",cibCount+" games")+
+      fact("With manual",manCount+" games")+
+      fact("Accessories",accCount)+
+      fact("Oldest",oldest.name.split(" / ")[0]+" · "+RELEASE_YEAR[oldest.name])+
+      fact("Newest",newest.name+" · "+RELEASE_YEAR[newest.name])+
+      fact("Years spanned",(RELEASE_YEAR[newest.name]-RELEASE_YEAR[oldest.name])+" yrs")+
+      fact("Total invested",money(totalSpend));
   }
   function animateBars(){
     document.querySelectorAll('#view-intel .btrack span').forEach(function(sp){
